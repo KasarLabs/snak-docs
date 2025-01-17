@@ -1,0 +1,21 @@
+site:
+  title: Starknet Agent Kit Documentation
+  url: https://docs.starknet-agent-kit.io
+  start_page: starknetagent::index.adoc
+
+content:
+  sources:
+    - url: .
+      branches: HEAD
+      start_path: components/StarknetAgent
+
+ui:
+  bundle:
+    url: https://gitlab.com/antora/antora-ui-default/-/releases/download/v1.0.0/ui-bundle.zip
+
+asciidoc:
+  attributes:
+    experimental: ''
+    idprefix: ''
+    idseparator: '-'
+    page-pagination: ''
