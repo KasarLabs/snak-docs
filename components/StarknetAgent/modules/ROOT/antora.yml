@@ -1,8 +1,0 @@
-name: starknetagent
-title: Starknet Agent Kit
-version: '1.0'
-nav:
-  - modules/ROOT/nav.adoc
-  - modules/architecture/nav.adoc
-  - modules/quick-start/nav.adoc
-  - modules/tools/nav.adoc
