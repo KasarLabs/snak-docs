@@ -1,7 +1,0 @@
-* xref:index.adoc[Home]
-* Quick Start
-** xref:quick-start:getting-started.adoc[Getting Started]
-* Architecture
-** xref:architecture:overview.adoc[Overview]
-* Tools and Integration
-** xref:tools:index.adoc[Available Tools]

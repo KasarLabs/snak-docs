@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom styles */
+.nextra-nav-container {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 20 !important;
+  background: rgba(255, 255, 255, 0.9) !important;
+  backdrop-filter: blur(12px) !important;
+}
+
+.dark .nextra-nav-container {
+  background: rgba(17, 17, 17, 0.9) !important;
+}
+
+.nextra-sidebar-container {
+  position: sticky !important;
+  top: 64px !important;
+  height: calc(100vh - 64px) !important;
+  overflow-y: auto !important;
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+  border-right: 1px solid rgba(234, 234, 234, 0.5) !important;
+}
+
+.dark .nextra-sidebar-container {
+  border-right: 1px solid rgba(38, 38, 38, 0.5) !important;
+}

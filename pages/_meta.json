@@ -1,0 +1,31 @@
+{
+  "index": {
+    "title": "Welcome",
+    "theme": {
+      "layout": "default",
+      "sidebar": true
+    }
+  },
+  "getting-started": {
+    "title": "Getting Started",
+    "type": "separator"
+  },
+  "get-started": {
+    "title": "Quickstart",
+    "type": "page"
+  },
+  "core-concepts": {
+    "title": "Core Concepts",
+    "type": "separator"
+  },
+  "core-concepts/agent-capabilities": "Agent Capabilities",
+  "core-concepts/agent-actions": "Agent Actions",
+  "core-concepts/langchain-tools": "LangChain Tools",
+  "core-concepts/wallet-management": "Wallet Management",
+  "reference": {
+    "title": "Reference",
+    "type": "separator"
+  },
+  "reference/ai-tooling": "AI Tooling",
+  "reference/mpc-wallets": "MPC Wallets"
+}
