@@ -1,11 +1,13 @@
-# compiled output
+# Compiled output
 /dist
-/node_modules
+node_modules
 .env
-.next
+.next/
+.next/cache/
 
 # Client
 /client/.next
+/client/.next/cache
 /client/node_modules
 /client/dist
 /client/.env.local
@@ -47,4 +49,9 @@ lerna-debug.log*
 tsconfig.build.tsbuildinfo
 tsconfig.tsbuildinfo
 
-*.tgz%                                                                                                                                                                                
+# Ignore tarballs
+*.tgz
+
+# Ignore large files
+*.gz
+*.node
