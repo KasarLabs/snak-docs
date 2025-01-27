@@ -1,28 +1,57 @@
 # Welcome to Starknet Agent Kit
 
-The Starknet Agent Kit (SAK) provides a powerful interface for interacting with the Starknet blockchain using natural language processing and AI capabilities.
+Starknet Agent Kit is a powerful toolkit for creating AI agents that can interact with the Starknet blockchain. It combines the power of AI language models with blockchain capabilities, allowing you to build intelligent applications that can perform complex operations on Starknet.
 
-## What is SAK?
+## Overview
 
-SAK is a comprehensive toolkit that enables developers to:
-- Interact with Starknet using natural language
-- Manage wallets and transactions
-- Integrate AI capabilities into their dApps
-- Use LangChain tools for blockchain operations
-
-## Quick Navigation
-
-- [Get Started](/get-started/quickstart)
-- [Explore Core Concepts](/core-concepts/agent-capabilities)
-- [API Reference](/reference/ai-tooling)
+- 🤖 **AI-Powered**: Built-in integration with leading AI models (Anthropic, OpenAI, Gemini, Ollama)
+- 🔗 **Blockchain-Native**: Direct interaction with Starknet contracts and transactions
+- 🛠️ **Extensible**: Modular design allows adding custom capabilities
+- 🔒 **Secure**: Built-in security features and best practices
 
 ## Key Features
 
-- **Natural Language Processing**: Interact with blockchain using plain English
-- **Wallet Management**: Secure and efficient wallet operations
-- **Smart Contract Interactions**: Deploy and interact with contracts seamlessly
-- **AI Integration**: Leverage AI for enhanced blockchain operations
+- **Account Management**: Create and manage Starknet accounts (Argent, OpenZeppelin)
+- **Token Operations**: Handle ERC20/ERC721 tokens with ease
+- **DeFi Integration**: Built-in support for major Starknet DEXes
+- **Custom Tools**: Extend functionality with custom Langchain tools
 
-## Ready to Start?
+## Quick Links
 
-Head over to our [Quickstart Guide](/get-started/quickstart) to begin your journey with SAK.
+- [Quick Start Guide](/get-started/quickstart)
+- [Core Concepts](/core-concepts/agent-actions)
+- [API Reference](/reference/api-reference)
+- [GitHub Repository](https://github.com/kasarlabs/starknet-agent-kit)
+
+## Example Usage
+
+```typescript
+import { StarknetAgent } from 'starknet-agent-kit';
+
+// Initialize agent
+const agent = new StarknetAgent({
+  aiProviderApiKey: 'your-ai-provider-key',
+  aiProvider: 'anthropic',
+  aiModel: 'claude-3-5-sonnet-latest',
+  accountPrivateKey: 'your-wallet-private-key',
+  rpcUrl: 'your-rpc-url',
+});
+
+// Execute natural language commands
+await agent.execute('Transfer 0.1 ETH to 0x123...');
+await agent.execute('What is my USDC balance?');
+```
+
+## Getting Started
+
+Check out our [Quick Start Guide](/get-started/quickstart) to begin building with Starknet Agent Kit.
+
+## Support & Community
+
+- Join our [Discord](https://discord.gg/kasarlabs)
+- Follow us on [Twitter](https://twitter.com/kasarlabs)
+- Report issues on [GitHub](https://github.com/kasarlabs/starknet-agent-kit/issues)
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](https://github.com/kasarlabs/starknet-agent-kit/blob/main/LICENSE) file for details.

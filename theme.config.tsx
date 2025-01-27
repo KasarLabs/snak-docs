@@ -18,11 +18,14 @@ const config: DocsThemeConfig = {
     defaultMenuCollapseLevel: 1,
     autoCollapse: false
   },
-  navigation: {
-    prev: true,
-    next: true
-  },
-  head: null
+  // Suppression de la navbar incorrecte
+  navigation: false, // Désactive la navigation
+  head: null,
+  useNextSeoProps() {
+    return {
+      titleTemplate: '%s – Starknet Agent Kit'
+    }
+  }
 };
 
 export default config;

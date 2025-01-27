@@ -2,19 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Custom styles */
+/* Navigation container styling */
 .nextra-nav-container {
   position: sticky !important;
   top: 0 !important;
   z-index: 20 !important;
   background: rgba(255, 255, 255, 0.9) !important;
   backdrop-filter: blur(12px) !important;
+  border-bottom: 1px solid rgba(234, 234, 234, 0.5) !important;
 }
 
 .dark .nextra-nav-container {
   background: rgba(17, 17, 17, 0.9) !important;
+  border-bottom: 1px solid rgba(38, 38, 38, 0.5) !important;
 }
 
+/* Hide the middle navigation menu */
+.nextra-nav-container nav:not(.nextra-nav-container-max) {
+  display: none !important;
+}
+
+/* Keep the sidebar styling */
 .nextra-sidebar-container {
   position: sticky !important;
   top: 64px !important;
@@ -27,4 +35,20 @@
 
 .dark .nextra-sidebar-container {
   border-right: 1px solid rgba(38, 38, 38, 0.5) !important;
+}
+
+/* Ensure the search and GitHub links stay visible */
+.nextra-nav-container-max {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 1rem !important;
+}
+
+/* Fix spacing in header */
+.nextra-nav-container > div {
+  display: flex !important;
+  justify-content: space-between !important;
+  width: 100% !important;
+  padding: 0 1rem !important;
 }

@@ -1,0 +1,149 @@
+# Agent Actions
+
+This guide explains the core actions available to Starknet agents and how to use them effectively.
+
+## Overview
+
+Agent actions are pre-built capabilities that allow your AI agent to interact with the Starknet blockchain. These actions are implemented as Langchain tools and cover various operations from basic transfers to complex DeFi interactions.
+
+## Available Actions
+
+### Account Operations
+
+```typescript
+// Get account balance
+await agent.execute("What's my ETH balance?");
+
+// Check balance of specific address
+await agent.execute("Get the USDC balance of 0x123...");
+
+// Create new account
+await agent.execute("Create a new OpenZeppelin account");
+```
+
+### Token Operations
+
+```typescript
+// Token transfers
+await agent.execute("Transfer 0.5 ETH to 0x456...");
+await agent.execute("Send 100 USDC to 0x789...");
+
+// Token approvals
+await agent.execute("Approve USDC spending for Avnu DEX");
+```
+
+### DeFi Operations
+
+```typescript
+// Token swaps
+await agent.execute("Swap 10 USDC for ETH on Avnu");
+
+// Liquidity operations
+await agent.execute("Add liquidity to ETH/USDC pool");
+```
+
+### Contract Interactions
+
+```typescript
+// Read contract state
+await agent.execute("Get storage at position 0x123 for contract 0x456...");
+
+// Simulate transactions
+await agent.execute("Simulate a transfer of 1 ETH to 0x789...");
+```
+
+## Custom Action Parameters
+
+When using direct tool calls, you can specify detailed parameters:
+
+```typescript
+import { SwapParams } from 'starknet-agent-kit';
+
+const swapParams: SwapParams = {
+  sellTokenSymbol: 'USDC',
+  buyTokenSymbol: 'ETH',
+  sellAmount: 100,
+};
+
+const result = await agent.tools.swapTokens(swapParams);
+```
+
+## Error Handling
+
+Actions include built-in error handling and validation:
+
+```typescript
+try {
+  const response = await agent.execute("Transfer 1000 ETH to 0x123...");
+  console.log(response);
+} catch (error) {
+  if (error.message.includes('insufficient balance')) {
+    console.log('Not enough funds for transfer');
+  } else {
+    console.error('Transaction failed:', error);
+  }
+}
+```
+
+## Transaction Monitoring
+
+Monitor the status of action transactions:
+
+```typescript
+const response = await agent.execute("Transfer 0.1 ETH to 0x123...");
+const txHash = JSON.parse(response).transactionHash;
+
+const receipt = await agent.transactionMonitor.waitForTransaction(
+  txHash,
+  (status) => console.log('Transaction status:', status)
+);
+```
+
+## Best Practices
+
+1. **Input Validation**: Always validate user inputs before executing actions
+2. **Error Handling**: Implement proper error handling for all actions
+3. **Gas Management**: Consider gas costs for operations
+4. **Transaction Confirmation**: Wait for transaction confirmations
+5. **Security**: Never expose private keys or sensitive data
+
+## Advanced Usage
+
+### Batch Operations
+
+```typescript
+// Execute multiple operations in sequence
+await agent.execute(`
+  1. Check my ETH balance
+  2. Transfer 0.1 ETH to 0x123...
+  3. Verify the transaction
+`);
+```
+
+### Custom Tool Integration
+
+Create custom tools for specific needs:
+
+```typescript
+import { tool } from '@langchain/core/tools';
+
+const customTool = tool(
+  async (params) => {
+    // Custom logic here
+    return JSON.stringify({ status: 'success', data: result });
+  },
+  {
+    name: 'custom_tool',
+    description: 'Custom tool description',
+    schema: customSchema,
+  }
+);
+
+agent.addTool(customTool);
+```
+
+## Next Steps
+
+- Learn how to [Add Agent Capabilities](/core-concepts/add-agent-capabilities)
+- Explore [Langchain Tools Integration](/core-concepts/integrate-langchain-tools)
+- Understand [Wallet Management](/core-concepts/wallet-management)

@@ -1,6 +1,5 @@
 {
-    "agent-capabilities": "Agent Capabilities",
     "agent-actions": "Agent Actions",
-    "langchain-tools": "LangChain Tools",
-    "wallet-management": "Wallet Management"
+    "add-agent-capabilities": "Add Agent Capabilities",
+    "integrate-langchain-tools": "Integrate Langchain Tools"
   }

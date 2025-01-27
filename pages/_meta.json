@@ -18,14 +18,28 @@
     "title": "Core Concepts",
     "type": "separator"
   },
-  "core-concepts/agent-capabilities": "Agent Capabilities",
-  "core-concepts/agent-actions": "Agent Actions",
-  "core-concepts/langchain-tools": "LangChain Tools",
-  "core-concepts/wallet-management": "Wallet Management",
+  "core-concepts/agent-actions": {
+    "title": "Agent Actions",
+    "type": "page"
+  },
+  "core-concepts/add-agent-capabilities": {
+    "title": "Add Agent Capabilities",
+    "type": "page"
+  },
+  "core-concepts/integrate-langchain-tools": {
+    "title": "Integrate LangChain Tools",
+    "type": "page"
+  },
   "reference": {
     "title": "Reference",
     "type": "separator"
   },
-  "reference/ai-tooling": "AI Tooling",
-  "reference/mpc-wallets": "MPC Wallets"
+  "reference/ai-tooling": {
+    "title": "AI Tooling",
+    "type": "page"
+  },
+  "reference/mpc-wallets": {
+    "title": "MPC Wallets",
+    "type": "page"
+  }
 }

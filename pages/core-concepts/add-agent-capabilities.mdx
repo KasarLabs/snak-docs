@@ -1,0 +1,378 @@
+# Add Agent Capabilities
+
+Learn how to extend your Starknet agent with custom capabilities and tools.
+
+## Understanding Agent Capabilities
+
+Agent capabilities are the building blocks that enable your AI agent to perform specific tasks on Starknet. These capabilities are implemented as Langchain tools and can be customized to suit your needs.
+
+## Creating Custom Tools
+
+### Basic Tool Structure
+
+```typescript
+import { tool } from '@langchain/core/tools';
+import { z } from 'zod';
+
+// Define input schema
+const customToolSchema = z.object({
+  param1: z.string().describe('First parameter description'),
+  param2: z.number().describe('Second parameter description'),
+});
+
+// Create the tool
+const customTool = tool(
+  async (params) => {
+    try {
+      // Tool implementation
+      const result = await performOperation(params);
+      
+      return JSON.stringify({
+        status: 'success',
+        data: result
+      });
+    } catch (error) {
+      return JSON.stringify({
+        status: 'failure',
+        error: error.message
+      });
+    }
+  },
+  {
+    name: 'custom_tool_name',
+    description: 'Detailed description of what the tool does',
+    schema: customToolSchema
+  }
+);
+```
+
+### Integrating with Starknet
+
+```typescript
+import { Contract, RpcProvider } from 'starknet';
+
+// Tool that interacts with a custom contract
+const contractTool = tool(
+  async (agent: StarknetAgentInterface, params: any) => {
+    const provider = agent.getProvider();
+    const contract = new Contract(ABI, CONTRACT_ADDRESS, provider);
+    
+    // Contract interaction
+    const result = await contract.someMethod(params);
+    
+    return JSON.stringify({
+      status: 'success',
+      data: result
+    });
+  },
+  {
+    name: 'contract_interaction',
+    description: 'Interacts with a specific contract'
+  }
+);
+```
+
+## Tool Categories
+
+### 1. Transaction Tools
+
+Tools for handling blockchain transactions:
+
+```typescript
+const transactionTool = tool(
+  async (agent: StarknetAgentInterface, params: TransactionParams) => {
+    const { contractAddress, method, args } = params;
+    
+    const result = await agent.contractInteractor.writeContract(
+      contractAddress,
+      method,
+      args
+    );
+    
+    return JSON.stringify(result);
+  },
+  {
+    name: 'execute_transaction',
+    description: 'Executes a contract transaction'
+  }
+);
+```
+
+### 2. Query Tools
+
+Tools for reading blockchain state:
+
+```typescript
+const queryTool = tool(
+  async (agent: StarknetAgentInterface, params: QueryParams) => {
+    const { contractAddress, method, args } = params;
+    
+    const result = await agent.contractInteractor.readContract(
+      contractAddress,
+      method,
+      args
+    );
+    
+    return JSON.stringify(result);
+  },
+  {
+    name: 'query_contract',
+    description: 'Queries contract state'
+  }
+);
+```
+
+### 3. Utility Tools
+
+Helper tools for common operations:
+
+```typescript
+const utilityTool = tool(
+  async (params: UtilityParams) => {
+    const result = performUtilityOperation(params);
+    return JSON.stringify(result);
+  },
+  {
+    name: 'utility_operation',
+    description: 'Performs utility operation'
+  }
+);
+```
+
+## Registering Tools
+
+Add tools to your agent:
+
+```typescript
+import { StarknetToolRegistry } from 'starknet-agent-kit';
+
+// Register a new tool
+StarknetToolRegistry.registerTool({
+  name: 'custom_tool',
+  description: 'Custom tool description',
+  schema: toolSchema,
+  execute: async (agent, params) => {
+    // Tool implementation
+  }
+});
+```
+
+## Best Practices
+
+1. **Input Validation**
+```typescript
+// Always validate inputs using Zod
+const schema = z.object({
+  address: z.string().regex(/^0x[a-fA-F0-9]{63,64}$/),
+  amount: z.number().positive(),
+});
+```
+
+2. **Error Handling**
+```typescript
+const safeTool = tool(
+  async (params) => {
+    try {
+      const validatedParams = schema.parse(params);
+      const result = await performOperation(validatedParams);
+      
+      return JSON.stringify({
+        status: 'success',
+        data: result
+      });
+    } catch (error) {
+      console.error('Tool execution failed:', error);
+      
+      if (error.name === 'ZodError') {
+        return JSON.stringify({
+          status: 'failure',
+          error: 'Invalid parameters provided',
+          details: error.errors
+        });
+      }
+      
+      return JSON.stringify({
+        status: 'failure',
+        error: error.message
+      });
+    }
+  }
+);
+```
+
+3. **Response Formatting**
+```typescript
+// Consistent response format
+interface ToolResponse {
+  status: 'success' | 'failure';
+  data?: any;
+  error?: string;
+  details?: unknown;
+}
+
+const formatResponse = (response: ToolResponse): string => {
+  return JSON.stringify(response);
+};
+```
+
+4. **Documentation**
+```typescript
+// Always provide comprehensive documentation
+StarknetToolRegistry.registerTool({
+  name: 'custom_tool',
+  description: `Performs a specific operation.
+    
+    Parameters:
+    - param1: string - Description of param1
+    - param2: number - Description of param2
+    
+    Returns:
+    - Success response includes: result data
+    - Failure response includes: error message
+    
+    Example:
+    custom_tool({ param1: "value", param2: 123 })`,
+  schema: toolSchema,
+  execute: async (agent, params) => {
+    // Implementation
+  }
+});
+```
+
+## Advanced Tool Patterns
+
+### 1. Composite Tools
+
+Tools that combine multiple operations:
+
+```typescript
+const compositeToolSchema = z.object({
+  operations: z.array(z.object({
+    type: z.enum(['transfer', 'swap', 'stake']),
+    params: z.record(z.unknown())
+  }))
+});
+
+const compositeTool = tool(
+  async (agent: StarknetAgentInterface, params: z.infer<typeof compositeToolSchema>) => {
+    const results = [];
+    
+    for (const operation of params.operations) {
+      const result = await executeOperation(agent, operation);
+      results.push(result);
+    }
+    
+    return JSON.stringify({
+      status: 'success',
+      results
+    });
+  },
+  {
+    name: 'batch_operations',
+    description: 'Executes multiple operations in sequence',
+    schema: compositeToolSchema
+  }
+);
+```
+
+### 2. Stateful Tools
+
+Tools that maintain state between calls:
+
+```typescript
+class StatefulTool {
+  private state: Map<string, any> = new Map();
+  
+  createTool() {
+    return tool(
+      async (params) => {
+        const { operation, key, value } = params;
+        
+        switch (operation) {
+          case 'set':
+            this.state.set(key, value);
+            break;
+          case 'get':
+            return this.state.get(key);
+        }
+      },
+      {
+        name: 'stateful_tool',
+        description: 'Maintains state between calls'
+      }
+    );
+  }
+}
+```
+
+### 3. Event-Driven Tools
+
+Tools that respond to blockchain events:
+
+```typescript
+const eventTool = tool(
+  async (agent: StarknetAgentInterface, params: EventParams) => {
+    const { contractAddress, eventName, fromBlock } = params;
+    
+    return new Promise((resolve) => {
+      agent.transactionMonitor.watchEvents(
+        fromBlock,
+        'latest',
+        (events) => {
+          // Process events
+          resolve(JSON.stringify({
+            status: 'success',
+            events
+          }));
+        }
+      );
+    });
+  },
+  {
+    name: 'event_monitor',
+    description: 'Monitors contract events'
+  }
+);
+```
+
+## Testing Tools
+
+Always include comprehensive tests for your tools:
+
+```typescript
+describe('Custom Tool', () => {
+  let agent: StarknetAgent;
+
+  beforeEach(() => {
+    agent = new StarknetAgent(config);
+  });
+
+  it('should handle valid parameters', async () => {
+    const result = await customTool.execute(agent, {
+      param1: 'value',
+      param2: 123
+    });
+    
+    expect(JSON.parse(result)).toMatchObject({
+      status: 'success'
+    });
+  });
+
+  it('should handle invalid parameters', async () => {
+    const result = await customTool.execute(agent, {
+      param1: 123, // Invalid type
+      param2: 'invalid' // Invalid type
+    });
+    
+    expect(JSON.parse(result)).toMatchObject({
+      status: 'failure'
+    });
+  });
+});
+```
+
+## Next Steps
+
+- Learn about [Integrating Langchain Tools](/core-concepts/integrate-langchain-tools)
+- Explore [Wallet Management](/core-concepts/wallet-management)
+- Check out our [API Reference](/reference/api-reference)
