@@ -3,33 +3,19 @@ const withNextra = require("nextra")({
   themeConfig: "./theme.config.tsx",
   defaultShowCopyCode: true,
   flexsearch: {
-    codeblocks: false,
+    codeblocks: true,
   },
+  staticImage: true,
 });
 
 module.exports = withNextra({
   reactStrictMode: true,
-  headers: async () => [
-    {
-      source: "/:path*",
-      headers: [
-        {
-          key: "X-Frame-Options",
-          value: "DENY",
-        },
-        {
-          key: "X-Content-Type-Options",
-          value: "nosniff",
-        },
-        {
-          key: "Referrer-Policy",
-          value: "origin-when-cross-origin",
-        },
-        {
-          key: "X-XSS-Protection",
-          value: "1; mode=block",
-        },
-      ],
-    },
-  ],
+  trailingSlash: false,
+  pageExtensions: ["ts", "tsx", "js", "jsx", "md", "mdx"],
+  webpack: (config, { isServer }) => {
+    config.resolve.extensionAlias = {
+      ".js": [".js", ".ts", ".tsx"],
+    };
+    return config;
+  },
 });
