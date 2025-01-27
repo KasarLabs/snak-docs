@@ -5,10 +5,12 @@ Welcome to the Starknet Agent Kit (SAK) documentation. This kit provides a power
 ## Documentation Structure
 
 - **Get Started**
+
   - Quick installation and basic setup guide
   - First steps with SAK
 
 - **Core Concepts**
+
   - Agent Actions and Capabilities
   - Wallet Management
   - LangChain Tools Integration
