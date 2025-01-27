@@ -17,10 +17,6 @@
   border-bottom: 1px solid rgba(38, 38, 38, 0.5) !important;
 }
 
-/* Hide the middle navigation menu */
-.nextra-nav-container nav:not(.nextra-nav-container-max) {
-  display: none !important;
-}
 
 /* Keep the sidebar styling */
 .nextra-sidebar-container {

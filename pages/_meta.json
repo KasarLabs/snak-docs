@@ -1,45 +1,44 @@
 {
   "index": {
-    "title": "Welcome",
-    "theme": {
-      "layout": "default",
-      "sidebar": true
-    }
+    "title": "Welcome"
   },
-  "getting-started": {
-    "title": "Getting Started",
+  "--- GET STARTED": {
+    "title": "GET STARTED",
     "type": "separator"
   },
-  "get-started": {
-    "title": "Quickstart",
-    "type": "page"
+  "create-agent": {
+    "title": "Create Your First Agent"
   },
-  "core-concepts": {
-    "title": "Core Concepts",
+  "--- CORE CONCEPTS": {
+    "title": "CORE CONCEPTS",
     "type": "separator"
   },
-  "core-concepts/agent-actions": {
-    "title": "Agent Actions",
-    "type": "page"
+  "understand-agents": {
+    "title": "How Agents Work"
   },
-  "core-concepts/add-agent-capabilities": {
-    "title": "Add Agent Capabilities",
-    "type": "page"
+  "customize-your-agent": {
+    "title": "Customize Your Agent"
   },
-  "core-concepts/integrate-langchain-tools": {
-    "title": "Integrate LangChain Tools",
-    "type": "page"
+  "agent-actions": {
+    "title": "Available Actions"
   },
-  "reference": {
-    "title": "Reference",
+  "add-agent-actions": {
+    "title": "Adding Agent Actions"
+  },
+  "integrate-langchain-tools": {
+    "title": "Integrate LangChain Tools"
+  },
+  "--- BUILD WITH THE KIT": {
+    "title": "BUILD WITH THE KIT",
     "type": "separator"
   },
-  "reference/ai-tooling": {
-    "title": "AI Tooling",
-    "type": "page"
+  "integrate-agents-to-dapp": {
+    "title": "Integrate Agents To Your DApp"
   },
-  "reference/mpc-wallets": {
-    "title": "MPC Wallets",
-    "type": "page"
+  "input": {
+    "title": "Add Custom Prompt Input"
+  },
+  "signature": {
+    "title": "How User Signature Works"
   }
 }
