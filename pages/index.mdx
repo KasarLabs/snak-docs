@@ -1,0 +1,31 @@
+This is the welcome page where we explain the kit
+
+First explaining that it is for people to deploy agent that interact with the starknet chain
+
+Agents can be deployed with a specific configuration with context and allowed tools or without config and the default context with all tools
+
+Agents can be autonomous based on context and tools or interactive based on a chat to give orders
+
+The kit contains a nest js server to comunicate with the agent
+
+The kit also contains a client frontend to chat with the agent
+
+The kit also contains an internal menu with either chat or auto to give orders or deploy autonomous agent
+
+The kit is also a package so that users can integrate the agent to their dapps like that:
+
+import { StarknetAgent } from 'starknet-agent-kit';
+
+const agent = new StarknetAgent({
+  aiProviderApiKey: 'your-ai-provider-key',
+  aiProvider: 'anthropic', // or 'openai', 'gemini', 'ollama'
+  aiModel: 'claude-3-5-sonnet-latest',
+  accountPrivateKey: 'your-wallet-private-key',
+  rpcUrl: 'your-rpc-url',
+});
+
+// Execute commands in natural language
+await agent.execute('transfer 0.1 ETH to 0x123...');
+await agent.execute('What is my ETH balance?');
+await agent.execute('Swap 5 USDC for ETH');
+
