@@ -1,5 +1,185 @@
-Explain what are the current actions available
+# Agent Actions
 
-How they are stored (tools and schema)
+import { Cards, Card, Callout, Steps } from "nextra/components";
+import {
+  CircleDollarSign,
+  Code2,
+  Terminal,
+  BookOpen,
+  Puzzle,
+  Plus
+} from "lucide-react";
+
+## What's an Action?
+
+<Callout emoji="💡">
+  An Action in the Starknet Agent Kit is a task that an agent can perform. Actions are implemented as tools with defined schemas and execution logic. Each action represents a specific capability, like transferring tokens or checking balances. These tools are static and implemented by developers to ensure desired and secure Agent behavior.
+</Callout>
+
+## Storage and Implementation
+
+<Cards>
+  <Card icon={<Code2 />} title="Tool Registry" href="#tool-registry-system">
+    Central registry system for managing actions
+  </Card>
+  <Card icon={<Puzzle />} title="Plugin Architecture" href="#plugin-architecture">
+    Protocol-specific organization of actions
+  </Card>
+</Cards>
+
+### Tool Registry System
+
+Actions are stored and managed through a central registry system in `lib/agent/tools.ts`. Each action is registered as a tool with:
+
+- `name`: A unique name
+- `description`: The tool description for the model to understand it's behavior
+- `schema`: Input schema (using Zod) for the model to understand which parameters it should extract from the request
+- `execute`: The function that will be executed by LangChain
+
+```typescript
+// Example tool registration
+StarknetToolRegistry.registerTool({
+  name: 'transfer',
+  description: 'Transfer ERC20 tokens to a specific address',
+  schema: Transferschema,
+  execute: transfer
+});
+```
+
+### Plugin Architecture
+
+<Callout type="info">
+Each protocol has its own directory under `lib/agent/methods/` with a standardized structure for organization.
+</Callout>
+
+```
+lib/agent/methods/
+└── [protocol-name]/
+    ├── abis/         # Protocol-specific ABIs
+    ├── actions/      # Protocol actions
+    ├── utils/        # Utility functions
+    ├── constant/     # Constants and addresses
+    ├── interface/    # Interfaces and schemas
+    └── types/        # Type definitions
+```
+
+## Interacting with Actions
+
+<Cards>
+  <Card icon={<Code2 />} title="Package Usage" href="#via-the-kit-package">
+    Use the kit programmatically
+  </Card>
+  <Card icon={<Terminal />} title="Agent UI" href="#via-the-agent-ui">
+    Use the built-in user interface
+  </Card>
+</Cards>
+
+### Via the Kit Package
+
+You can interact with actions in two ways:
+
+#### 1. Using the Agent Interface
+
+```typescript
+import { StarknetAgent } from "starknet-agent-kit";
+
+const agent = new StarknetAgent({
+  aiProviderApiKey: "your-key",
+  aiModel: "claude-3-5-sonnet-latest",
+  provider: rpcProvider,
+  accountPublicKey: "your-public-key",
+  accountPrivateKey: "your-private-key"
+});
+
+// Execute actions using natural language
+await agent.execute("Transfer 5 USDC to 0x123...");
+```
+
+#### 2. Using Individual Tools
+
+```typescript
+import { getBalance, transfer, swapTokens } from 'starknet-agent-kit';
+
+// Use tools individually
+const balance = await getBalance(address);
+const transferResult = await transfer(recipient, amount);
+```
+
+### Via the Agent UI
+
+You can simply set the required environment and run the following command to start the development User Interface
+
+<Steps>
+### Configure Environment
+```bash
+NEXT_PUBLIC_PORT="Your frontend port address (set 3000 by default)"
+NEXT_PUBLIC_API_KEY="The configured Agent NestJS server API key"
+NEXT_PUBLIC_RPC_URL="Your Starknet RPC url"
+```
+
+### Start the UI
+
+```bash
+pnpm run dev --frontend-only
+```
+
+
+### Access Interface
+Open your browser on and interact with the agent through yout frontend port address `https://localhost:3000`
+</Steps>
+
+### Via Agent Native Chat
+
+<Steps>
+You can interact with the agent directly through its API:
+
+### Start the server:
+```bash
+pnpm install
+pnpm run dev
+```
+
+### Send requests
+
+Use the chat interface (select `chat` on the starting menu), or make API calls:
+
+```bash
+curl --location 'localhost:3001/api/agent/request' \
+--header 'x-api-key: NEXT_PUBLIC_API_KEY' \
+--header 'Content-Type: application/json' \
+--data '{
+    "request": "What's my strk balance"
+}'
+```
+</Steps>
+
+## Available Actions Catalog
+
+<Callout type="info">
+  A comprehensive interface in the Kit will provide an easy-to-navigate catalog of all available plugins and their actions, making discovery and usage simpler.
+</Callout>
+
+## Extended Capabilities
+
+To add action capabilities you can either leverage LangChain tools or add your own custom Plugins and Actions
+
+<Cards>
+  <Card icon={<Plus />} title="Add Custom Actions" href="/add-agent-actions">
+    Create your own custom actions
+  </Card>
+  <Card icon={<Puzzle />} title="Integrate LangChain Actions" href="/integrate-langchain-tools">
+    Extend capabilities with LangChain integration
+  </Card>
+</Cards>
+
+Explain what is an Action
+
+How they are stored (tools and schema) + implementation via plugins
 
 How to call them trought the package or the agent chat
+
+Explain that the current plugins and their actions available will be displayed in an high level interface of the Kit soon
+
+Also explain that more actions are available in integrate langchain tools
+
+Explain that they can add agent actions
