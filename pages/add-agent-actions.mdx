@@ -21,7 +21,6 @@ import {
 
 The **Starknet Agent Kit** follows a decentralized approach where each contributor can add their own actions for a specific protocol. The goal is to make it easier to understand and scale to support the entire Network by clearly isolating the logic for each protocol.
 
-
 ---
 
 ## Folder Organization
@@ -42,7 +41,8 @@ lib/agent/methods/
 ```
 
 <Callout type="info" emoji="ℹ️">
-  For core actions such as RPC methods or shared utilities, please add them under `lib/agent/methods/core/` using the same underlying subdirectories.
+  For core actions such as RPC methods or shared utilities, please add them
+  under `lib/agent/methods/core/` using the same underlying subdirectories.
 </Callout>
 
 For example, for a protocol named `myProtocol`, the structure could look like:
@@ -165,6 +165,7 @@ describe("myAction", () => {
 <Cards>
 
 {" "}
+
 <Card
   icon={<Users />}
   title="Tool Organization"
@@ -175,6 +176,7 @@ describe("myAction", () => {
 </Card>
 
 {" "}
+
 <Card
   icon={<AlertCircle />}
   title="Error Handling"
@@ -185,6 +187,7 @@ describe("myAction", () => {
 </Card>
 
 {" "}
+
 <Card
   icon={<CheckCircle2 />}
   title="Input Validation"
@@ -195,6 +198,7 @@ describe("myAction", () => {
 </Card>
 
 {" "}
+
 <Card icon={<TestTube2 />} title="Testing" href="/best-practices/testing">
   Ensure reliability - Unit tests - Edge cases - Mock data - Integration tests -
   Security testing

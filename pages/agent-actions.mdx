@@ -7,13 +7,17 @@ import {
   Terminal,
   BookOpen,
   Puzzle,
-  Plus
+  Plus,
 } from "lucide-react";
 
 ## What's an Action?
 
 <Callout emoji="💡">
-  An Action in the Starknet Agent Kit is a task that an agent can perform. Actions are implemented as tools with defined schemas and execution logic. Each action represents a specific capability, like transferring tokens or checking balances. These tools are static and implemented by developers to ensure desired and secure Agent behavior.
+  An Action in the Starknet Agent Kit is a task that an agent can perform.
+  Actions are implemented as tools with defined schemas and execution logic.
+  Each action represents a specific capability, like transferring tokens or
+  checking balances. These tools are static and implemented by developers to
+  ensure desired and secure Agent behavior.
 </Callout>
 
 ## Storage and Implementation
@@ -22,7 +26,11 @@ import {
   <Card icon={<Code2 />} title="Tool Registry" href="#tool-registry-system">
     Central registry system for managing actions
   </Card>
-  <Card icon={<Puzzle />} title="Plugin Architecture" href="#plugin-architecture">
+  <Card
+    icon={<Puzzle />}
+    title="Plugin Architecture"
+    href="#plugin-architecture"
+  >
     Protocol-specific organization of actions
   </Card>
 </Cards>
@@ -39,17 +47,18 @@ Actions are stored and managed through a central registry system in `lib/agent/t
 ```typescript
 // Example tool registration
 StarknetToolRegistry.registerTool({
-  name: 'transfer',
-  description: 'Transfer ERC20 tokens to a specific address',
+  name: "transfer",
+  description: "Transfer ERC20 tokens to a specific address",
   schema: Transferschema,
-  execute: transfer
+  execute: transfer,
 });
 ```
 
 ### Plugin Architecture
 
 <Callout type="info">
-Each protocol has its own directory under `lib/agent/methods/` with a standardized structure for organization.
+  Each protocol has its own directory under `lib/agent/methods/` with a
+  standardized structure for organization.
 </Callout>
 
 ```
@@ -88,7 +97,7 @@ const agent = new StarknetAgent({
   aiModel: "claude-3-5-sonnet-latest",
   provider: rpcProvider,
   accountPublicKey: "your-public-key",
-  accountPrivateKey: "your-private-key"
+  accountPrivateKey: "your-private-key",
 });
 
 // Execute actions using natural language
@@ -98,7 +107,7 @@ await agent.execute("Transfer 5 USDC to 0x123...");
 #### 2. Using Individual Tools
 
 ```typescript
-import { getBalance, transfer, swapTokens } from 'starknet-agent-kit';
+import { getBalance, transfer, swapTokens } from "starknet-agent-kit";
 
 // Use tools individually
 const balance = await getBalance(address);
@@ -123,9 +132,10 @@ NEXT_PUBLIC_RPC_URL="Your Starknet RPC url"
 pnpm run dev --frontend-only
 ```
 
-
 ### Access Interface
+
 Open your browser on and interact with the agent through yout frontend port address `https://localhost:3000`
+
 </Steps>
 
 ### Via Agent Native Chat
@@ -134,6 +144,7 @@ Open your browser on and interact with the agent through yout frontend port addr
 You can interact with the agent directly through its API:
 
 ### Start the server:
+
 ```bash
 pnpm install
 pnpm run dev
@@ -151,12 +162,15 @@ curl --location 'localhost:3001/api/agent/request' \
     "request": "What's my strk balance"
 }'
 ```
+
 </Steps>
 
 ## Available Actions Catalog
 
 <Callout type="info">
-  A comprehensive interface in the Kit will provide an easy-to-navigate catalog of all available plugins and their actions, making discovery and usage simpler.
+  A comprehensive interface in the Kit will provide an easy-to-navigate catalog
+  of all available plugins and their actions, making discovery and usage
+  simpler.
 </Callout>
 
 ## Extended Capabilities
@@ -167,7 +181,11 @@ To add action capabilities you can either leverage LangChain tools or add your o
   <Card icon={<Plus />} title="Add Custom Actions" href="/add-agent-actions">
     Create your own custom actions
   </Card>
-  <Card icon={<Puzzle />} title="Integrate LangChain Actions" href="/integrate-langchain-tools">
+  <Card
+    icon={<Puzzle />}
+    title="Integrate LangChain Actions"
+    href="/integrate-langchain-tools"
+  >
     Extend capabilities with LangChain integration
   </Card>
 </Cards>
