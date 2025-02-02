@@ -3,7 +3,7 @@ title: "Adding Agent Actions"
 ---
 
 import { Steps } from "nextra/components";
-import { Cards, Card } from "nextra/components";
+import { Cards, Card, Callout } from "nextra/components";
 import {
   CircleDollarSign, // for TransactionIcon
   Link2, // for ChainIcon
@@ -19,21 +19,14 @@ import {
 
 # Adding Agent Actions
 
-The **Starknet Agent Kit** now follows a decentralized approach where each contributor can add their own implementation for a specific protocol. This reorganization makes it easier to understand and scale the project by clearly isolating the logic for each protocol.
+The **Starknet Agent Kit** follows a decentralized approach where each contributor can add their own actions for a specific protocol. The goal is to make it easier to understand and scale to support the entire Network by clearly isolating the logic for each protocol.
 
-For core requests—such as RPC methods or shared utilities—please add them under:
-
-```
-lib/agent/methods/core/
-```
-
-using the same underlying subdirectories.
 
 ---
 
 ## Folder Organization
 
-### Implementation Library (`lib/agent/methods/`)
+### Plugins Library (`lib/agent/methods/`)
 
 Each protocol implementation should be placed in its own directory under `lib/agent/methods/` with the following structure:
 
@@ -47,6 +40,10 @@ lib/agent/methods/
     ├── interface/    # Interfaces and validation schemas
     └── types/        # Type definitions specific to the protocol
 ```
+
+<Callout type="info" emoji="ℹ️">
+  For core actions such as RPC methods or shared utilities, please add them under `lib/agent/methods/core/` using the same underlying subdirectories.
+</Callout>
 
 For example, for a protocol named `myProtocol`, the structure could look like:
 
