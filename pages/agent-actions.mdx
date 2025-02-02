@@ -1,39 +1,63 @@
-# Agent Actions
-
 import { Cards, Card, Callout, Steps } from "nextra/components";
 import {
   CircleDollarSign,
   Code2,
   Terminal,
   BookOpen,
+  Package,
   Puzzle,
   Plus,
+  Lightbulb,
 } from "lucide-react";
 
-## What's an Action?
-
-<Callout emoji="💡">
-  An Action in the Starknet Agent Kit is a task that an agent can perform.
-  Actions are implemented as tools with defined schemas and execution logic.
-  Each action represents a specific capability, like transferring tokens or
-  checking balances. These tools are static and implemented by developers to
-  ensure desired and secure Agent behavior.
-</Callout>
-
-## Storage and Implementation
+# Agent Actions
 
 <Cards>
-  <Card icon={<Code2 />} title="Tool Registry" href="#tool-registry-system">
-    Central registry system for managing actions
+  <Card icon={<Lightbulb />} title="What's an Action?" href="#whats-an-action">
+    Understanding core concepts and capabilities
+  </Card>
+  <Card
+    icon={<Package />}
+    title="Implementing Actions"
+    href="#storage-and-implementation"
+  >
+    Tool registry system and plugin architecture
+  </Card>
+  <Card
+    icon={<Code2 />}
+    title="Interacting with Actions"
+    href="#interacting-with-actions"
+  >
+    Different ways to interact with Actions
+  </Card>
+  <Card
+    icon={<BookOpen />}
+    title="Available Actions"
+    href="#available-actions-catalog"
+  >
+    Browse the catalog of available Actions
+  </Card>
+  <Card icon={<Plus />} title="Custom Actions" href="#extended-capabilities">
+    Create and add your own custom Actions
   </Card>
   <Card
     icon={<Puzzle />}
-    title="Plugin Architecture"
-    href="#plugin-architecture"
+    title="LangChain Integration"
+    href="#extended-capabilities"
   >
-    Protocol-specific organization of actions
+    Extend capabilities with LangChain tools
   </Card>
 </Cards>
+
+## What's an Action?
+
+An Action in the Starknet Agent Kit is a task that an agent can perform.
+Actions are implemented as tools with defined schemas and execution logic.
+Each action represents a specific capability, like transferring tokens or
+checking balances. These tools are static and implemented by developers to
+ensure desired and secure Agent behavior.
+
+## Storage and Implementation
 
 ### Tool Registry System
 
@@ -73,15 +97,6 @@ lib/agent/methods/
 ```
 
 ## Interacting with Actions
-
-<Cards>
-  <Card icon={<Code2 />} title="Package Usage" href="#via-the-kit-package">
-    Use the kit programmatically
-  </Card>
-  <Card icon={<Terminal />} title="Agent UI" href="#via-the-agent-ui">
-    Use the built-in user interface
-  </Card>
-</Cards>
 
 ### Via the Kit Package
 
@@ -178,16 +193,16 @@ curl --location 'localhost:3001/api/agent/request' \
 To add action capabilities you can either leverage LangChain tools or add your own custom Plugins and Actions
 
 <Cards>
-  <Card icon={<Plus />} title="Add Custom Actions" href="/add-agent-actions">
-    Create your own custom actions
-  </Card>
+  <Card
+    icon={<Plus />}
+    title="Add Custom Actions"
+    href="/add-agent-actions"
+  ></Card>
   <Card
     icon={<Puzzle />}
-    title="Integrate LangChain Actions"
+    title="LangChain Tools"
     href="/integrate-langchain-tools"
-  >
-    Extend capabilities with LangChain integration
-  </Card>
+  ></Card>
 </Cards>
 
 Explain what is an Action
