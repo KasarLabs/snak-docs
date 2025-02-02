@@ -1,10 +1,299 @@
+---
+title: "Adding Agent Actions"
+---
+
+import { Steps } from "nextra/components";
+import { Cards, Card } from "nextra/components";
+import {
+  CircleDollarSign, // for TransactionIcon
+  Link2, // for ChainIcon
+  FileCode2, // for ContractIcon
+  Users, // for OrganizationIcon
+  AlertCircle, // for ErrorIcon
+  CheckCircle2, // for ValidationIcon
+  TestTube2, // for TestingIcon
+  FileText, // for DocumentationIcon
+} from "lucide-react";
+
+---
+
+# Adding Agent Actions
+
+The **Starknet Agent Kit** now follows a decentralized approach where each contributor can add their own implementation for a specific protocol. This reorganization makes it easier to understand and scale the project by clearly isolating the logic for each protocol.
+
+For core requests—such as RPC methods or shared utilities—please add them under:
+
+```
+lib/agent/methods/core/
+```
+
+using the same underlying subdirectories.
+
+---
+
+## Folder Organization
+
+### Implementation Library (`lib/agent/methods/`)
+
+Each protocol implementation should be placed in its own directory under `lib/agent/methods/` with the following structure:
+
+```
+lib/agent/methods/
+└── [protocol-name]/
+    ├── abis/         # Protocol-specific ABIs (e.g., accounts, tokens, etc.)
+    ├── actions/      # Implementations of protocol actions (everything formerly in "method")
+    ├── utils/        # Utility functions and classes specific to the protocol
+    ├── constant/     # Constants and addresses specific to the protocol
+    ├── interface/    # Interfaces and validation schemas
+    └── types/        # Type definitions specific to the protocol
+```
+
+For example, for a protocol named `myProtocol`, the structure could look like:
+
+```
+lib/agent/methods/myProtocol/
+├── abis/
+│   └── accountABI.json
+├── actions/
+│   └── myAction.ts
+├── utils/
+│   └── formatter.ts
+├── constant/
+│   └── networkConstants.ts
+├── interface/
+│   └── myActionSchema.ts
+└── types/
+    └── myActionTypes.ts
+```
+
+---
+
+## Step-by-Step Implementation
+
+<Steps>
+### Create the Validation Schema
+
+Create a schema in `lib/agent/methods/myProtocol/interface/myActionSchema.ts`:
+
+```typescript
+import { z } from "zod";
+
+export const myActionSchema = z.object({
+  param1: z.string().describe("Description for the first parameter"),
+  param2: z.number().describe("Description for the second parameter"),
+  // Add more parameters as needed
+});
+```
+
+### Implement the Action
+
+Place your action implementation in `lib/agent/methods/myProtocol/actions/myAction.ts`:
+
+```typescript
+import { myActionSchema } from "../interface/myActionSchema";
+
+export const myAction = async (
+  agent: StarknetAgentInterface,
+  params: z.infer<typeof myActionSchema>,
+): Promise<string> => {
+  try {
+    // Protocol-specific implementation for myProtocol
+    const result = {}; // Replace with the actual logic
+    return JSON.stringify({
+      status: "success",
+      data: result,
+    });
+  } catch (error) {
+    return JSON.stringify({
+      status: "error",
+      error: error instanceof Error ? error.message : "Unknown error",
+    });
+  }
+};
+```
+
+### Add Utilities, Constants, or Types
+
+- Place protocol-specific constants in `lib/agent/methods/myProtocol/constant/`
+- Add helper functions in `lib/agent/methods/myProtocol/utils/`
+- Define any additional types in `lib/agent/methods/myProtocol/types/`
+
+### Register Your Action
+
+After implementing the action, register it so the agent can recognize and use it. For example:
+
+```typescript
+import { StarknetToolRegistry } from "path/to/registry";
+import { myActionSchema } from "../interface/myActionSchema";
+import { myAction } from "../actions/myAction";
+
+StarknetToolRegistry.registerTool({
+  name: "my_action",
+  description: "Description of what your action does",
+  schema: myActionSchema,
+  execute: myAction,
+});
+```
+
+### Test Your Action
+
+Ensure your action works as expected by writing tests. Create a test file in `test/unit-test/methods/myProtocol/myAction.spec.ts`:
+
+```typescript
+// test/unit-test/methods/myProtocol/myAction.spec.ts
+
+describe("myAction", () => {
+  let agent: StarknetAgentInterface;
+
+  beforeEach(() => {
+    agent = createMockAgent();
+  });
+
+  it("should execute successfully", async () => {
+    const result = await myAction(agent, {
+      param1: "test",
+      param2: 123,
+    });
+    expect(JSON.parse(result).status).toBe("success");
+  });
+});
+```
+
+</Steps>
+
+---
+
+## Best practices
+
+<Cards>
+
+{" "}
+<Card
+  icon={<Users />}
+  title="Tool Organization"
+  href="/best-practices/organization"
+>
+  Structure your code - Appropriate categorization - Naming conventions - One
+  tool per file - Logical grouping - Clear structure
+</Card>
+
+{" "}
+<Card
+  icon={<AlertCircle />}
+  title="Error Handling"
+  href="/best-practices/errors"
+>
+  Manage errors gracefully - Try/catch blocks - JSON responses - Error types -
+  Error recovery - Logging
+</Card>
+
+{" "}
+<Card
+  icon={<CheckCircle2 />}
+  title="Input Validation"
+  href="/best-practices/validation"
+>
+  Ensure data integrity - Zod schemas - Input validation - Clear parameters -
+  Type constraints - Edge cases
+</Card>
+
+{" "}
+<Card icon={<TestTube2 />} title="Testing" href="/best-practices/testing">
+  Ensure reliability - Unit tests - Edge cases - Mock data - Integration tests -
+  Security testing
+</Card>
+
+  <Card
+    icon={<FileText />}
+    title="Documentation"
+    href="/best-practices/docs"
+  >
+    Document thoroughly
+    - Clear parameters
+    - Usage examples
+    - Updated docs
+    - API documentation
+    - Troubleshooting
+  </Card>
+</Cards>
+
+### Tool Organization
+
+Follow these organizational principles:
+
+- Place tools in `src/lib/agent/method/[category]/`
+- Use consistent naming:
+  - Methods: camelCase
+  - Types: PascalCase
+  - Files: kebab-case
+- One tool per file
+- Group related tools logically
+
+### Error Handling
+
+Implement robust error handling:
+
+```typescript
+try {
+  // Operation
+} catch (error) {
+  if (error instanceof StarknetError) {
+    throw new AgentError("STARKNET_ERROR", error.message);
+  }
+  throw new AgentError("UNKNOWN_ERROR", "Unexpected error");
+}
+```
+
+### Input Validation
+
+Use Zod for schema validation:
+
+```typescript
+export const transferSchema = z.object({
+  recipient: z
+    .string()
+    .regex(/^0x[0-9a-fA-F]+$/)
+    .describe("Recipient address"),
+  amount: z.string().regex(/^\d+$/).describe("Transfer amount"),
+});
+```
+
+### Testing
+
+Write comprehensive tests:
+
+```typescript
+describe("TransferTool", () => {
+  it("successful transfer", async () => {
+    // Test implementation
+  });
+
+  it("handles failures", async () => {
+    // Test implementation
+  });
+});
+```
+
+### Documentation
+
+Document your code thoroughly:
+
+```typescript
+/**
+ * Execute a token transfer
+ * @param {string} recipient - Recipient address
+ * @param {string} amount - Transfer amount
+ * @returns {Promise<TransferResult>} Transfer result
+ */
+```
+
 This page will explain the current architecture of the starknet kit
 
 Whats the current Starknet Agent Kit architecture
 
 Explaining that core components are store inside core so that people can inherit from other tools
 
-Explaining how tools and schema are stored and how to add them 
+Explaining how tools and schema are stored and how to add them
 
 Whats the flow for manually integrating a tool
 

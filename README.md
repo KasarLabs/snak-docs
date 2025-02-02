@@ -47,5 +47,3 @@ We welcome contributions to improve the documentation. Please feel free to submi
 ## License
 
 MIT License - see LICENSE for details
-
-
