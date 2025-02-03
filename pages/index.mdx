@@ -1,32 +1,39 @@
-This is the welcome page where we explain the kit
+---
+title: Welcome to Starknet Agent Kit
+---
 
-First explaining that it is for people to deploy agent that interact with the starknet chain
+import { Cards, Card } from "nextra/components";
+import {
+  CircleDollarSign,
+  Cpu,
+  Code2,
+  Puzzle,
+  Zap,
+  Terminal,
+} from "lucide-react";
 
-Agents can be deployed with a specific configuration with context and allowed tools or without config and the default context with all tools
+# Welcome to Starknet Agent Kit
 
-Agents can be autonomous based on context and tools or interactive based on a chat to give orders
+Build, deploy, and integrate AI agents that can interact with the Starknet blockchain. Whether you're looking to create autonomous agents or add interactive AI capabilities to your dApp, Starknet Agent Kit provides the tools you need.
 
-The kit contains a nest js server to comunicate with the agent
+## Getting Started
 
-The kit also contains a client frontend to chat with the agent
+<Cards>
+  <Card icon={<Cpu />} title="Create Your First Agent" href="/create-agent">
+    Deploy your first Starknet agent in minutes
+  </Card>
+  <Card
+    icon={<Code2 />}
+    title="Integrate Into Your DApp"
+    href="/integrate-agents-to-dapp"
+  >
+    Add AI capabilities to your existing application
+  </Card>
+  <Card icon={<Puzzle />} title="Explore Actions" href="/agent-actions">
+    Discover available blockchain interactions
+  </Card>
+</Cards>
 
-The kit also contains an internal menu with either chat or auto to give orders or deploy autonomous agent
+## Quick Start Tutorial
 
-The kit is also a package so that users can integrate the agent to their dapps like that:
-
-```js
-import { StarknetAgent } from "starknet-agent-kit";
-
-const agent = new StarknetAgent({
-  aiProviderApiKey: "your-ai-provider-key",
-  aiProvider: "anthropic", // or 'openai', 'gemini', 'ollama'
-  aiModel: "claude-3-5-sonnet-latest",
-  accountPrivateKey: "your-wallet-private-key",
-  rpcUrl: "your-rpc-url",
-});
-
-// Execute commands in natural language
-await agent.execute("transfer 0.1 ETH to 0x123...");
-await agent.execute("What is my ETH balance?");
-await agent.execute("Swap 5 USDC for ETH");
-```
+(tutorial video)

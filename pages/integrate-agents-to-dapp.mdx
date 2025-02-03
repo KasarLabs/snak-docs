@@ -4,20 +4,22 @@ It gives informations to the package and how to install it
 
 This explains how to run the kit as a package like this
 
+```js
 import { StarknetAgent } from "starknet-agent-kit";
 
 const agent = new StarknetAgent({
-aiProviderApiKey: 'your-ai-provider-key',
-aiProvider: 'anthropic', // or 'openai', 'gemini', 'ollama'
-aiModel: 'claude-3-5-sonnet-latest',
-accountPrivateKey: 'your-wallet-private-key',
-rpcUrl: 'your-rpc-url',
+  aiProviderApiKey: "your-ai-provider-key",
+  aiProvider: "anthropic", // or 'openai', 'gemini', 'ollama'
+  aiModel: "claude-3-5-sonnet-latest",
+  accountPrivateKey: "your-wallet-private-key",
+  rpcUrl: "your-rpc-url",
 });
 
 // Execute commands in natural language
-await agent.execute('transfer 0.1 ETH to 0x123...');
-await agent.execute('What is my ETH balance?');
-await agent.execute('Swap 5 USDC for ETH');
+await agent.execute("transfer 0.1 ETH to 0x123...");
+await agent.execute("What is my ETH balance?");
+await agent.execute("Swap 5 USDC for ETH");
+```
 
 This page redirects also to the input page to explain how to add redy to go input directly (like a connect wallet button)
 

@@ -1,3 +1,5 @@
+const { hostname } = require("os");
+
 const withNextra = require("nextra")({
   theme: "nextra-theme-docs",
   themeConfig: "./theme.config.tsx",
@@ -9,6 +11,16 @@ const withNextra = require("nextra")({
 });
 
 module.exports = withNextra({
+  images: {
+    domains: ["github.com"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "raw.githubusercontent.com",
+        pathname: "/KasarLabs/brand/**",
+      },
+    ],
+  },
   reactStrictMode: true,
   trailingSlash: false,
   pageExtensions: ["ts", "tsx", "js", "jsx", "md", "mdx"],

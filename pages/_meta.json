@@ -35,8 +35,8 @@
   "integrate-agents-to-dapp": {
     "title": "Integrate Agents To Your DApp"
   },
-  "input": {
-    "title": "Add Custom Prompt Input"
+  "build-custom-input": {
+    "title": "Build Custom Prompt Input"
   },
   "signature": {
     "title": "How User Signature Works"
