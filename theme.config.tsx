@@ -6,19 +6,18 @@ import Link from "next/link";
 import { useTheme } from "next-themes";
 
 const Footer = () => {
-  const { theme, resolvedTheme } = useTheme();
-  // Use resolvedTheme instead of theme to get the actual current theme
+  const { resolvedTheme } = useTheme();
   const isDarkTheme = resolvedTheme === "dark";
 
   return (
     <footer
-      className={`w-full border-t ${isDarkTheme ? "border-neutral-800 light" : "border-neutral-800 light"}`}
+      className={`w-full border-t ${isDarkTheme ? "border-neutral-800" : "border-neutral-200"}`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-8">
+      <div className="container mx-auto px-4 py-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-          {/* Column 1 - KasarLabs Logo and Terms */}
+          {/* Logo & Terms */}
           <div className="flex flex-col space-y-4">
-            <div className="w-[125px] sm:w-[140px]">
+            <div className="w-32 sm:w-40">
               <div className="relative w-full h-10">
                 <Image
                   src={
@@ -28,99 +27,47 @@ const Footer = () => {
                   }
                   fill
                   alt="kasarlabs"
-                  style={{ objectFit: "contain" }}
+                  className="object-contain"
                 />
               </div>
             </div>
-            <div className="text-sm flex flex-wrap gap-2 dark:text-neutral-400 text-neutral-600">
-              <a
-                href="https://pay.kasar.io/pages/terms-and-conditions"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-black dark:hover:text-white cursor-pointer transition-colors"
-              >
-                Terms
-              </a>
+            <div className="flex flex-wrap gap-2 text-sm text-neutral-600 dark:text-neutral-400">
+              <FooterLink href="/terms" text="Terms" />
               <span className="hidden sm:inline">•</span>
-              <a
-                href="https://pay.kasar.io/pages/general-conditions-of-sale"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-black dark:hover:text-white cursor-pointer transition-colors"
-              >
-                Conditions
-              </a>
+              <FooterLink href="/conditions" text="Conditions" />
               <span className="hidden sm:inline">•</span>
-              <a
-                href="https://pay.kasar.io/pages/legal-information"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-black dark:hover:text-white cursor-pointer transition-colors"
-              >
-                Legal
-              </a>
+              <FooterLink href="/legal" text="Legal" />
             </div>
-            <p className="text-xs md:text-sm dark:text-neutral-400 text-neutral-600">
-              © {new Date().getFullYear()} KasarLabs. All rights reserved.
-            </p>
           </div>
 
-          {/* Column 2 - Resources */}
+          {/* Resources */}
           <div className="sm:mt-0">
-            <h3 className="font-semibold mb-3 md:mb-4 text-base md:text-lg text-black dark:text-white">
-              Resources
-            </h3>
-            <ul className="space-y-2 md:space-y-3">
-              <li>
-                <a
-                  href="https://www.starknet.io"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-neutral-600 dark:text-neutral-400 hover:text-black dark:hover:text-white text-sm md:text-base transition-colors"
-                >
-                  Starknet
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://docs.starknet.io"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-neutral-600 dark:text-neutral-400 hover:text-black dark:hover:text-white text-sm md:text-base transition-colors"
-                >
-                  Documentation
-                </a>
-              </li>
+            <h3 className="text-lg font-semibold mb-4">Resources</h3>
+            <ul className="space-y-2">
+              <FooterListItem href="https://www.starknet.io" text="Starknet" />
+              <FooterListItem
+                href="https://docs.starknet.io"
+                text="Documentation"
+              />
             </ul>
           </div>
 
-          {/* Column 3 - Contact Us */}
+          {/* Social Links */}
           <div className="sm:mt-0">
-            <h3 className="font-semibold mb-3 md:mb-4 text-base md:text-lg text-black dark:text-white">
-              Contact us
-            </h3>
-            <div className="flex space-x-4 md:space-x-6">
-              <Link
+            <h3 className="text-lg font-semibold mb-4">Connect</h3>
+            <div className="flex space-x-4">
+              <SocialLink
                 href="https://twitter.com/kasarlabs"
-                target="_blank"
-                className="text-neutral-600 dark:text-neutral-400 hover:text-black dark:hover:text-white transition-colors"
-              >
-                <BsTwitter className="w-6 h-6 sm:w-7 sm:h-7" />
-              </Link>
-              <Link
+                icon={<BsTwitter />}
+              />
+              <SocialLink
                 href="https://t.me/+jZZuOamlUM5lNWNk"
-                target="_blank"
-                className="text-neutral-600 dark:text-neutral-400 hover:text-black dark:hover:text-white transition-colors"
-              >
-                <BsTelegram className="w-6 h-6 sm:w-7 sm:h-7" />
-              </Link>
-              <Link
+                icon={<BsTelegram />}
+              />
+              <SocialLink
                 href="https://github.com/kasarlabs"
-                target="_blank"
-                className="text-neutral-600 dark:text-neutral-400 hover:text-black dark:hover:text-white transition-colors"
-              >
-                <BsGithub className="w-6 h-6 sm:w-7 sm:h-7" />
-              </Link>
+                icon={<BsGithub />}
+              />
             </div>
           </div>
         </div>
@@ -129,11 +76,55 @@ const Footer = () => {
   );
 };
 
+const FooterLink = ({ href, text }) => (
+  <a
+    href={href}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="hover:text-black dark:hover:text-white transition-colors"
+  >
+    {text}
+  </a>
+);
+
+const FooterListItem = ({ href, text }) => (
+  <li>
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="text-neutral-600 dark:text-neutral-400 hover:text-black dark:hover:text-white transition-colors"
+    >
+      {text}
+    </a>
+  </li>
+);
+
+const SocialLink = ({ href, icon }) => (
+  <Link
+    href={href}
+    target="_blank"
+    className="text-neutral-600 dark:text-neutral-400 hover:text-black dark:hover:text-white transition-colors"
+  >
+    <div className="w-6 h-6 sm:w-7 sm:h-7">{icon}</div>
+  </Link>
+);
+
+import { useCallback, useState } from "react";
+
 const config = {
   logo: (
     <div className="flex items-center space-x-2">
-      <Image src="/starknet.png" alt="Logo" width={32} height={32} />
-      <span className="font-semibold text-lg">Starknet Agent Kit</span>
+      <Image
+        src="/starknet.png"
+        alt="Logo"
+        width={32}
+        height={32}
+        className="w-8 h-8"
+      />
+      <span className="font-semibold text-base md:text-lg">
+        Starknet Agent Kit
+      </span>
     </div>
   ),
   project: {
@@ -147,20 +138,17 @@ const config = {
       titleTemplate: asPath !== "/" ? "%s – Starknet" : "Docs",
     };
   },
-  head: () => {
-    const { asPath } = useRouter();
-    return (
-      <>
-        <link rel="icon" href="/favicon.ico" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta property="og:title" content="Starknet Agent Kit Documentation" />
-        <meta
-          property="og:description"
-          content="Documentation for Starknet Agent Kit"
-        />
-      </>
-    );
-  },
+  head: () => (
+    <>
+      <link rel="icon" href="/favicon.ico" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <meta property="og:title" content="Starknet Agent Kit Documentation" />
+      <meta
+        property="og:description"
+        content="Documentation for Starknet Agent Kit"
+      />
+    </>
+  ),
   primaryHue: {
     dark: 204,
     light: 212,
@@ -168,12 +156,35 @@ const config = {
   sidebar: {
     defaultMenuCollapseLevel: 1,
     toggleButton: true,
+    mobileSwipeRedirect: true,
+  },
+  useNextSeoProps() {
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+    const toggleMenu = useCallback(() => {
+      setIsMenuOpen(!isMenuOpen);
+      const sidebar = document.querySelector(".nextra-sidebar-container");
+      if (sidebar) {
+        sidebar.setAttribute("data-toggle", (!isMenuOpen).toString());
+      }
+    }, [isMenuOpen]);
+
+    return {
+      titleTemplate: "%s – Starknet",
+      defaultTitle: "Starknet Agent Kit Documentation",
+    };
   },
   feedback: {
     content: null,
   },
   footer: {
     component: <Footer />,
+  },
+  // Mobile navigation improvements
+  mobileMenu: true,
+  mobileMenuButton: true,
+  search: {
+    placeholder: "Search documentation...",
   },
 };
 

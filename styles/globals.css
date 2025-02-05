@@ -4,46 +4,114 @@
 
 /* Navigation container styling */
 .nextra-nav-container {
-  position: sticky !important;
-  top: 0 !important;
-  z-index: 20 !important;
-  background: rgba(255, 255, 255, 0.9) !important;
-  backdrop-filter: blur(12px) !important;
-  border-bottom: 1px solid rgba(234, 234, 234, 0.5) !important;
+  @apply sticky top-0 z-50;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(234, 234, 234, 0.5);
 }
 
 .dark .nextra-nav-container {
-  background: rgba(17, 17, 17, 0.9) !important;
-  border-bottom: 1px solid rgba(38, 38, 38, 0.5) !important;
+  background: rgba(17, 17, 17, 0.9);
+  border-bottom: 1px solid rgba(38, 38, 38, 0.5);
 }
 
-/* Keep the sidebar styling */
+/* Sidebar container */
 .nextra-sidebar-container {
-  position: sticky !important;
-  top: 64px !important;
-  height: calc(100vh - 64px) !important;
-  overflow-y: auto !important;
-  margin-left: 0 !important;
-  padding-left: 0 !important;
-  border-right: 1px solid rgba(234, 234, 234, 0.5) !important;
+  @apply w-full lg:w-64 shrink-0;
+  height: calc(100vh - var(--nextra-navbar-height));
 }
 
-.dark .nextra-sidebar-container {
-  border-right: 1px solid rgba(38, 38, 38, 0.5) !important;
+/* Mobile sidebar */
+@media (max-width: 767px) {
+  .nextra-sidebar-container {
+    @apply fixed top-0 bottom-0 left-0 right-0 z-[100] overflow-y-auto overscroll-y-contain bg-white dark:bg-neutral-900;
+    transition: transform 0.5s ease;
+    transform: translateX(-100%);
+  }
+
+  .nextra-sidebar-container[data-active="true"] {
+    transform: translateX(0);
+  }
+
+  /* Mobile menu overlay */
+  .nextra-sidebar-overlay {
+    @apply fixed inset-0 z-40 bg-black/40 backdrop-blur-sm;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+  }
+
+  .nextra-sidebar-overlay[data-active="true"] {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* Adjust content margin when menu is open */
+  .nextra-sidebar-container[data-active="true"] + .nextra-content {
+    margin-left: 0;
+  }
 }
 
-/* Ensure the search and GitHub links stay visible */
-.nextra-nav-container-max {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: flex-end !important;
-  gap: 1rem !important;
+/* Menu toggle button */
+.nextra-hamburger {
+  @apply block md:hidden;
 }
 
-/* Fix spacing in header */
-.nextra-nav-container > div {
-  display: flex !important;
-  justify-content: space-between !important;
-  width: 100% !important;
-  padding: 0 1rem !important;
+/* Cards grid responsiveness */
+.nextra-cards {
+  @apply grid gap-4;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+}
+
+/* Responsive typography */
+h1 {
+  @apply text-3xl md:text-4xl font-bold mb-6;
+}
+
+h2 {
+  @apply text-2xl md:text-3xl font-semibold mb-4;
+}
+
+h3 {
+  @apply text-xl md:text-2xl font-semibold mb-3;
+}
+
+/* Content container */
+.nextra-content {
+  @apply px-4 md:px-8 pb-8 pt-4 max-w-full w-full min-w-0;
+}
+
+/* Navigation items */
+.nextra-nav-container nav {
+  @apply px-4 md:px-6 mx-auto max-w-[90rem];
+}
+
+/* Footer */
+.nextra-footer {
+  @apply px-4 md:px-8 py-6 border-t;
+}
+
+/* Tables */
+table {
+  @apply w-full overflow-x-auto block md:table my-6;
+}
+
+/* Code blocks */
+pre {
+  @apply overflow-x-auto p-4 text-sm md:text-base rounded-lg;
+}
+
+/* Search dialog */
+.nextra-search input {
+  @apply w-full px-4 py-2 text-sm md:text-base;
+}
+
+/* Navigation items spacing */
+.nextra-nav-container .nextra-nav-link {
+  @apply px-2 py-1 md:px-3 md:py-2;
+}
+
+/* Mobile menu button */
+button[aria-label="Menu"] {
+  @apply p-2 hover:bg-gray-100 dark:hover:bg-neutral-800 rounded-md;
 }
