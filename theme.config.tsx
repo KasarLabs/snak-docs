@@ -25,9 +25,11 @@ const Footer = () => {
                       ? "https://raw.githubusercontent.com/KasarLabs/brand/refs/heads/main/kasar/logo/KasarBlackLogo.png"
                       : "https://raw.githubusercontent.com/KasarLabs/brand/refs/heads/main/kasar/logo/KasarWhiteLogo.png"
                   }
-                  fill
                   alt="kasarlabs"
                   className="object-contain"
+                  width={160}
+                  height={40}
+                  priority
                 />
               </div>
             </div>
@@ -110,8 +112,6 @@ const SocialLink = ({ href, icon }) => (
   </Link>
 );
 
-import { useCallback, useState } from "react";
-
 const config = {
   logo: (
     <div className="flex items-center space-x-2">
@@ -135,7 +135,10 @@ const config = {
   useNextSeoProps() {
     const { asPath } = useRouter();
     return {
-      titleTemplate: asPath !== "/" ? "%s – Starknet" : "Docs",
+      titleTemplate:
+        asPath !== "/"
+          ? "%s – Starknet Agent Kit"
+          : "Starknet Agent Kit Documentation",
     };
   },
   head: () => (
@@ -156,33 +159,10 @@ const config = {
   sidebar: {
     defaultMenuCollapseLevel: 1,
     toggleButton: true,
-    mobileSwipeRedirect: true,
-  },
-  useNextSeoProps() {
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-    const toggleMenu = useCallback(() => {
-      setIsMenuOpen(!isMenuOpen);
-      const sidebar = document.querySelector(".nextra-sidebar-container");
-      if (sidebar) {
-        sidebar.setAttribute("data-toggle", (!isMenuOpen).toString());
-      }
-    }, [isMenuOpen]);
-
-    return {
-      titleTemplate: "%s – Starknet",
-      defaultTitle: "Starknet Agent Kit Documentation",
-    };
-  },
-  feedback: {
-    content: null,
   },
   footer: {
     component: <Footer />,
   },
-  // Mobile navigation improvements
-  mobileMenu: true,
-  mobileMenuButton: true,
   search: {
     placeholder: "Search documentation...",
   },

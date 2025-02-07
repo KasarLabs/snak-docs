@@ -15,47 +15,12 @@
   border-bottom: 1px solid rgba(38, 38, 38, 0.5);
 }
 
-/* Sidebar container */
-.nextra-sidebar-container {
-  @apply w-full lg:w-64 shrink-0;
-  height: calc(100vh - var(--nextra-navbar-height));
-}
-
-/* Mobile sidebar */
-@media (max-width: 767px) {
-  .nextra-sidebar-container {
-    @apply fixed top-0 bottom-0 left-0 right-0 z-[100] overflow-y-auto overscroll-y-contain bg-white dark:bg-neutral-900;
-    transition: transform 0.5s ease;
-    transform: translateX(-100%);
-  }
-
-  .nextra-sidebar-container[data-active="true"] {
-    transform: translateX(0);
-  }
-
-  /* Mobile menu overlay */
-  .nextra-sidebar-overlay {
-    @apply fixed inset-0 z-40 bg-black/40 backdrop-blur-sm;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.5s ease;
-  }
-
-  .nextra-sidebar-overlay[data-active="true"] {
-    opacity: 1;
-    pointer-events: auto;
-  }
-
-  /* Adjust content margin when menu is open */
-  .nextra-sidebar-container[data-active="true"] + .nextra-content {
-    margin-left: 0;
-  }
-}
-
 /* Menu toggle button */
 .nextra-hamburger {
   @apply block md:hidden;
 }
+
+/* Rest of your existing styles... */
 
 /* Cards grid responsiveness */
 .nextra-cards {
@@ -104,11 +69,6 @@ pre {
 /* Search dialog */
 .nextra-search input {
   @apply w-full px-4 py-2 text-sm md:text-base;
-}
-
-/* Navigation items spacing */
-.nextra-nav-container .nextra-nav-link {
-  @apply px-2 py-1 md:px-3 md:py-2;
 }
 
 /* Mobile menu button */
