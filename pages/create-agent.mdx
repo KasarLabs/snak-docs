@@ -23,22 +23,33 @@ Follow these steps to create and deploy your first Starknet agent:
 
 First, create a `.env` file in your project root with the following variables:
 
-```env
-PRIVATE_KEY="your_wallet_private_key"
-PUBLIC_ADDRESS="your_wallet_address"
-RPC_URL="your_rpc_endpoint"
-AI_PROVIDER_API_KEY="your_ai_api_key"
-AI_PROVIDER="your_api_provider_name"
-AI_MODEL="your_model_name"
+```dotenv
+# Starknet configuration (mandatory)
+STARKNET_PUBLIC_ADDRESS="YOUR_STARKNET_PUBLIC_ADDRESS"
+STARKNET_PRIVATE_KEY="YOUR_STARKNET_PRIVATE_KEY"
+STARKNET_RPC_URL="YOUR_STARKNET_RPC_URL"
+
+# AI Provider configuration (mandatory)
+AI_PROVIDER_API_KEY="YOUR_AI_PROVIDER_API_KEY"
+AI_MODEL="YOUR_AI_MODEL"
+AI_PROVIDER="YOUR_AI_PROVIDER"
+
+# NestJS server configuration
+SERVER_API_KEY="YOUR_SERVER_API_KEY"
+SERVER_PORT="YOUR_SERVER_PORT"
+
+# Agent additional configuration
+DISCORD_BOT_TOKEN?="YOUR_DISCORD_BOT_TOKEN"
+DISCORD_CHANNEL_ID?="YOUR_DISCORD_CHANNEL_ID"
 ```
 
-Here's what each variable means:
+You can retrieve the above values the following way:
 
 | Variable              | Description                                                                                                |
 | --------------------- | ---------------------------------------------------------------------------------------------------------- |
-| `PUBLIC_ADDRESS`      | Your Starknet wallet address (from [Argent X](https://www.argent.xyz/) or [Braavos](https://braavos.app/)) |
-| `PRIVATE_KEY`         | Your wallet's private key (export from wallet settings)                                                    |
-| `RPC_URL`             | Endpoint from an [RPC provider](https://docs.starknet.io/tools/fullnodes-rpc-providers/#rpc_providers)     |
+| `STARKNET_PUBLIC_ADDRESS`      | Your Starknet wallet address (from [Argent X](https://www.argent.xyz/) or [Braavos](https://braavos.app/)) |
+| `STARKNET_PRIVATE_KEY`         | Your wallet's private key (export from wallet settings)                                                    |
+| `STARKNET_RPC_URL`             | Endpoint from an [RPC provider](https://docs.starknet.io/tools/fullnodes-rpc-providers/#rpc_providers)     |
 | `AI_PROVIDER_API_KEY` | API key from your chosen provider (e.g., [Anthropic](https://docs.anthropic.com/en/api/getting-started))   |
 | `AI_PROVIDER`         | Model provider name (e.g., "anthropic")                                                                    |
 | `AI_MODEL`            | Specific model identifier (e.g., "claude-3-5-sonnet-latest")                                               |
