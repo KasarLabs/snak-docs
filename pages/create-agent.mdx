@@ -5,13 +5,7 @@ description: "Learn how to deploy your own Starknet agent in minutes"
 
 import { Steps } from "nextra/components";
 import { Cards, Card, Callout } from "nextra/components";
-import { 
-  Terminal,
-  Settings,
-  Bot,
-  MessageSquare,
-  Zap
-} from "lucide-react";
+import { Terminal, Settings, Bot, MessageSquare, Zap } from "lucide-react";
 
 # Create Your First Agent
 
@@ -40,17 +34,18 @@ AI_MODEL="your_model_name"
 
 Here's what each variable means:
 
-| Variable | Description |
-|----------|-------------|
-| `PUBLIC_ADDRESS` | Your Starknet wallet address (from [Argent X](https://www.argent.xyz/) or [Braavos](https://braavos.app/)) |
-| `PRIVATE_KEY` | Your wallet's private key (export from wallet settings) |
-| `RPC_URL` | Endpoint from an [RPC provider](https://docs.starknet.io/tools/fullnodes-rpc-providers/#rpc_providers) |
-| `AI_PROVIDER_API_KEY` | API key from your chosen provider (e.g., [Anthropic](https://docs.anthropic.com/en/api/getting-started)) |
-| `AI_PROVIDER` | Model provider name (e.g., "anthropic") |
-| `AI_MODEL` | Specific model identifier (e.g., "claude-3-5-sonnet-latest") |
+| Variable              | Description                                                                                                |
+| --------------------- | ---------------------------------------------------------------------------------------------------------- |
+| `PUBLIC_ADDRESS`      | Your Starknet wallet address (from [Argent X](https://www.argent.xyz/) or [Braavos](https://braavos.app/)) |
+| `PRIVATE_KEY`         | Your wallet's private key (export from wallet settings)                                                    |
+| `RPC_URL`             | Endpoint from an [RPC provider](https://docs.starknet.io/tools/fullnodes-rpc-providers/#rpc_providers)     |
+| `AI_PROVIDER_API_KEY` | API key from your chosen provider (e.g., [Anthropic](https://docs.anthropic.com/en/api/getting-started))   |
+| `AI_PROVIDER`         | Model provider name (e.g., "anthropic")                                                                    |
+| `AI_MODEL`            | Specific model identifier (e.g., "claude-3-5-sonnet-latest")                                               |
 
 <Callout type="warning">
-  Never commit your private keys or API keys to version control. Make sure to add `.env` to your `.gitignore` file.
+  Never commit your private keys or API keys to version control. Make sure to
+  add `.env` to your `.gitignore` file.
 </Callout>
 
 ### 2. Agent Configuration
@@ -61,7 +56,8 @@ Your agent's personality and capabilities can be configured in the `./config/age
 - Create a custom configuration
 
 <Callout type="info">
-  For detailed configuration options, check out our [Agent Customization Guide](/customize-your-agent).
+  For detailed configuration options, check out our [Agent Customization
+  Guide](/customize-your-agent).
 </Callout>
 
 For this tutorial, we'll use the default configuration to get started quickly.
@@ -94,30 +90,22 @@ You'll be prompted to choose between two operation modes:
 Now that your agent is up and running, explore these advanced features:
 
 <Cards>
-  <Card 
-    icon={<MessageSquare />} 
-    title="Customize Behavior" 
+  <Card
+    icon={<MessageSquare />}
+    title="Customize Behavior"
     href="/customize-your-agent"
   >
     Configure your agent's personality and decision-making capabilities
   </Card>
-  <Card 
-    icon={<Zap />} 
-    title="Explore Actions" 
-    href="/agent-actions"
-  >
+  <Card icon={<Zap />} title="Explore Actions" href="/agent-actions">
     Discover the built-in actions available to your Starknet agent
   </Card>
-  <Card 
-    icon={<Bot />} 
-    title="Add Custom Actions" 
-    href="/add-agent-actions"
-  >
+  <Card icon={<Bot />} title="Add Custom Actions" href="/add-agent-actions">
     Extend your agent's capabilities with custom actions and integrations
   </Card>
-  <Card 
-    icon={<Settings />} 
-    title="Integrate with dApp" 
+  <Card
+    icon={<Settings />}
+    title="Integrate with dApp"
     href="/integrate-agents-to-dapp"
   >
     Connect your agent to your decentralized application
@@ -125,5 +113,6 @@ Now that your agent is up and running, explore these advanced features:
 </Cards>
 
 <Callout type="info">
-  Monitor your agent's activities and ensure it has sufficient funds for any transactions it needs to perform.
+  Monitor your agent's activities and ensure it has sufficient funds for any
+  transactions it needs to perform.
 </Callout>

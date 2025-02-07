@@ -4,14 +4,59 @@ import { useRouter } from "next/router";
 import { BsTelegram, BsTwitter, BsGithub } from "react-icons/bs";
 import Link from "next/link";
 import { useTheme } from "next-themes";
+import { DocsThemeConfig } from 'nextra-theme-docs';
 
-const Footer = () => {
+interface FooterLinkProps {
+  href: string;
+  text: string;
+}
+
+interface SocialLinkProps {
+  href: string;
+  icon: React.ReactNode;
+}
+
+const FooterLink: React.FC<FooterLinkProps> = ({ href, text }) => (
+  <a
+    href={href}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="hover:text-black dark:hover:text-white transition-colors"
+  >
+    {text}
+  </a>
+);
+
+const FooterListItem: React.FC<FooterLinkProps> = ({ href, text }) => (
+  <li>
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="text-neutral-600 dark:text-neutral-400 hover:text-black dark:hover:text-white transition-colors"
+    >
+      {text}
+    </a>
+  </li>
+);
+
+const SocialLink: React.FC<SocialLinkProps> = ({ href, icon }) => (
+  <Link
+    href={href}
+    target="_blank"
+    className="text-neutral-600 dark:text-neutral-400 hover:text-black dark:hover:text-white transition-colors"
+  >
+    <div className="w-6 h-6 sm:w-7 sm:h-7">{icon}</div>
+  </Link>
+);
+
+const Footer: React.FC = () => {
   const { resolvedTheme } = useTheme();
   const isDarkTheme = resolvedTheme === "dark";
 
   return (
     <footer
-      className={`w-full border-t ${isDarkTheme ? "border-neutral-800" : "border-neutral-200"}`}
+      className={`w-full`}
     >
       <div className="container mx-auto px-4 py-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
@@ -78,41 +123,7 @@ const Footer = () => {
   );
 };
 
-const FooterLink = ({ href, text }) => (
-  <a
-    href={href}
-    target="_blank"
-    rel="noopener noreferrer"
-    className="hover:text-black dark:hover:text-white transition-colors"
-  >
-    {text}
-  </a>
-);
-
-const FooterListItem = ({ href, text }) => (
-  <li>
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="text-neutral-600 dark:text-neutral-400 hover:text-black dark:hover:text-white transition-colors"
-    >
-      {text}
-    </a>
-  </li>
-);
-
-const SocialLink = ({ href, icon }) => (
-  <Link
-    href={href}
-    target="_blank"
-    className="text-neutral-600 dark:text-neutral-400 hover:text-black dark:hover:text-white transition-colors"
-  >
-    <div className="w-6 h-6 sm:w-7 sm:h-7">{icon}</div>
-  </Link>
-);
-
-const config = {
+const config: DocsThemeConfig = {
   logo: (
     <div className="flex items-center space-x-2">
       <Image
@@ -161,11 +172,11 @@ const config = {
     toggleButton: true,
   },
   footer: {
-    component: <Footer />,
+    component: Footer,
   },
   search: {
     placeholder: "Search documentation...",
   },
 };
 
-export default config;
+export default config
