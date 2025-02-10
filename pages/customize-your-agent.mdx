@@ -1,3 +1,114 @@
-The goal of this page is to explain how to configure an agent
+---
+title: Customize Your Agent
+description: Learn how to configure your agent, set transaction limits, integrate social media, and run your agent.
+---
 
-How you will configure its context and the tools available to it
+# Customize Your Agent
+
+## Agent Configuration
+
+Create your agent configuration file in the `config/agents/` directory. You can use the provided `default.agent.json` as a template or create your own:
+
+```json
+{
+  "name": "Your Agent name",
+  "bio": "Your AI Agent Bio",
+  "lore": [
+    "Some lore of your AI Agent 1",
+    "Some lore of your AI Agent 2"
+  ],
+  "objectif": [
+    "first objectif that your AI Agent need to follow",
+    "second objectif that your AI Agent need to follow"
+  ],
+  "knowledge": [
+    "first knowledge of your AI Agent",
+    "second knowledge of your AI Agent"
+  ],
+  "interval": "Your agent interval between each transaction in ms",
+  "chat_id": "Your Agent Chat-id",
+  "external_client": [
+    "first external_client",
+    "second external_client"
+  ],
+  "allowed_external_client_tools": [
+    "first allowed_external_client_tools",
+    "second allowed_external_client_tools"
+  ]
+}
+```
+
+### Configuration Fields Explained
+
+Below is a list of fields for defining an agent:
+
+| Field                         | Description |
+|--------------------------------|------------|
+| `name`                         | Your agent's identifier. |
+| `bio`                          | A brief description of your agent's purpose. |
+| `lore`                         | Background information that defines your agent's character. |
+| `objectif`                     | A list of tasks and goals your agent should accomplish. |
+| `knowledge`                    | Areas of expertise your agent should have. |
+| `interval`                     | Time between actions (in milliseconds) for autonomous mode. |
+| `chat_id`                      | Unique identifier for chat sessions. |
+| `external_client`              | List of external platforms (e.g., 'discord', 'twitter'). |
+| `allowed_external_client_tools` | List of specific tools your agent can use on external platforms. |
+
+## Transaction Limits
+
+Set up transaction limits in the `config/limit/config-limit.json` file to control your agent's spending:
+
+```json
+{
+  "transfer_limit": [
+    {
+      "symbol": "ETH",
+      "amount": "0.000001"
+    },
+    {
+      "symbol": "STRK",
+      "amount": "2"
+    }
+  ]
+}
+```
+
+The agent will check these limits before executing any transfers. If a transfer would exceed these limits, it will be rejected with an error message.
+
+## Social Media Integration
+
+### Environment Setup
+
+Add these variables to your `.env` file:
+
+```env
+# Twitter Configuration
+# Choose authentication mode - must be either "API" or "CREDIDENTIALS"
+TWITTER_AUTH_MODE="YOUR_TWITTER_CONFIGURATION_MODE"
+
+# If using API mode, fill these:
+TWITTER_API="YOUR_TWITTER_API"
+TWITTER_API_SECRET="YOUR_TWITTER_API_SECRET"
+TWITTER_ACCESS_TOKEN="YOUR_TWITTER_ACCESS_TOKEN"
+TWITTER_ACCESS_TOKEN_SECRET="YOUR_TWITTER_ACCESS_TOKEN_SECRET"
+
+# If using CREDENTIALS mode, fill these:
+TWITTER_USERNAME="YOUR_TWITTER_USERNAME"
+TWITTER_PASSWORD="YOUR_TWITTER_PASSWORD"
+TWITTER_EMAIL="YOUR_TWITTER_EMAIL"
+
+# Discord Configuration (Optional)
+DISCORD_BOT_TOKEN="YOUR_DISCORD_BOT_TOKEN"
+DISCORD_CHANNEL_ID="YOUR_DISCORD_CHANNEL_ID"
+```
+
+## Running Your Agent
+
+1. Ensure all configurations are in place.
+2. Start the agent by specifying your config file:
+
+   ```bash
+   pnpm run local --agent=your-config-file.json
+   ```
+
+The agent will automatically load your configuration and initialize any configured social media integrations.

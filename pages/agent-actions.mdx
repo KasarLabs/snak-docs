@@ -81,12 +81,12 @@ StarknetToolRegistry.registerTool({
 ### Plugin Architecture
 
 <Callout type="info">
-  Each protocol has its own directory under `lib/agent/methods/` with a
+  Each protocol has its own directory under `lib/agent/plugins/` with a
   standardized structure for organization.
 </Callout>
 
 ```
-lib/agent/methods/
+lib/agent/plugins/
 └── [protocol-name]/
     ├── abis/         # Protocol-specific ABIs
     ├── actions/      # Protocol actions
@@ -95,101 +95,141 @@ lib/agent/methods/
     ├── interface/    # Interfaces and schemas
     └── types/        # Type definitions
 ```
-
 ## Interacting with Actions
 
-### Via the Kit Package
+import { Tabs, Tab } from 'nextra/components'
 
-You can interact with actions in two ways:
+There are currently four ways to run actions through your agents:
 
-#### 1. Using the Agent Interface
+<Tabs items={['Package', 'Chat', 'User Interface', 'Server API']}>
+  <Tab>
+    The kit is available as an NPM package that you can import in your projects to leverage agent actions.
 
-```typescript
-import { StarknetAgent } from "starknet-agent-kit";
+    <Steps>
+    ### Install Package
+    ```bash
+    npm install starknet-agent-kit
+    ```
 
-const agent = new StarknetAgent({
-  aiProviderApiKey: "your-key",
-  aiModel: "claude-3-5-sonnet-latest",
-  provider: rpcProvider,
-  accountPublicKey: "your-public-key",
-  accountPrivateKey: "your-private-key",
-});
+    ### Choose Integration Method
+    You can integrate the kit using either the Agent interface or individual tools:
 
-// Execute actions using natural language
-await agent.execute("Transfer 5 USDC to 0x123...");
-```
+    #### Option A: Agent Interface
+    ```typescript
+    import { StarknetAgent } from "starknet-agent-kit";
 
-#### 2. Using Individual Tools
+    const agent = new StarknetAgent({
+      aiProviderApiKey: "your-key",
+      aiModel: "claude-3-5-sonnet-latest",
+      provider: rpcProvider,
+      accountPublicKey: "your-public-key",
+      accountPrivateKey: "your-private-key",
+    });
 
-```typescript
-import { getBalance, transfer, swapTokens } from "starknet-agent-kit";
+    // Execute actions using natural language
+    await agent.execute("Transfer 5 USDC to 0x123...");
+    ```
 
-// Use tools individually
-const balance = await getBalance(address);
-const transferResult = await transfer(recipient, amount);
-```
+    #### Option B: Individual Tools
+    ```typescript
+    import { getBalance, transfer, swapTokens } from "starknet-agent-kit";
 
-### Via the Agent UI
+    // Use tools individually
+    const balance = await getBalance(address);
+    const transferResult = await transfer(recipient, amount);
+    ```
+    </Steps>
+  </Tab>
 
-You can simply set the required environment and run the following command to start the development User Interface
+  <Tab>
+    Interact with your agent through the embedded chat interface.
 
-<Steps>
-### Configure Environment
-```bash
-NEXT_PUBLIC_SERVER_API_KEY="The configured Agent NestJS server API key"
-NEXT_PUBLIC_STARKNET_RPC_URL="Your Starknet RPC url"
-```
+    <Steps>
+    ### Install Dependencies
+    ```bash
+    pnpm install
+    ```
 
-### Start the UI
+    ### Start Local Agent
+    ```bash
+    pnpm run local
+    ```
 
-```bash
-pnpm run dev --frontend-only
-```
+    ### Access Chat Interface
+    Select the chat option in the menu to start interacting with your agent.
+    </Steps>
+  </Tab>
 
-### Access Interface
+  <Tab>
+    Use the development User Interface to interact with your agent.
 
-Open your browser on and interact with the agent through yout frontend port address `https://localhost:3000`
+    <Steps>
+    ### Configure Environment
+    Create or update your `client/.env` file with the required variables:
+    ```bash
+    NEXT_PUBLIC_SERVER_API_KEY="The configured Agent NestJS server API key"
+    NEXT_PUBLIC_STARKNET_RPC_URL="Your Starknet RPC url"
+    ```
 
-</Steps>
+    ### Start Development Server
+    ```bash
+    pnpm install
+    pnpm run dev
+    ```
 
-### Via Agent Native Chat
+    ### Access Interface
+    Open your browser and navigate to `http://localhost:3000` to interact with your agent.
+    </Steps>
+  </Tab>
 
-<Steps>
-You can interact with the agent directly through its API:
+  <Tab>
+    Interact with your agent directly through its API endpoints.
 
-### Start the server:
+    <Steps>
+    ### Start API Server
+    ```bash
+    pnpm install
+    pnpm run dev --backend-only
+    ```
 
-```bash
-pnpm install
-pnpm run dev
-```
+    ### Make API Requests
 
-### Send requests
 
-Use the chat interface (select `chat` on the starting menu), or make API calls:
+    ```bash
+    curl --location 'localhost:3001/api/agent/request' \
+    --header 'x-api-key: NEXT_PUBLIC_API_KEY' \
+    --header 'Content-Type: application/json' \
+    --data '{
+        "request": "What's my strk balance"
+    }'
+    ```
 
-```bash
-curl --location 'localhost:3001/api/agent/request' \
---header 'x-api-key: NEXT_PUBLIC_API_KEY' \
---header 'Content-Type: application/json' \
---data '{
-    "request": "What's my strk balance"
-}'
-```
-
-</Steps>
+    ### Monitor Responses
+    Check the response JSON for your agent's replies and action results.
+    </Steps>
+  </Tab>
+</Tabs>
 
 ## Available Actions Catalog
 
-<Callout type="info">
-  A comprehensive interface in the Kit will provide an easy-to-navigate catalog
-  of all available plugins and their actions, making discovery and usage
-  simpler.
-</Callout>
+### Explore plugins
 
-## Extended Capabilities
+You can explore the implemented plugins and their available actions directly in the source code under [`src/lib/agent/plugins`](https://github.com/KasarLabs/starknet-agent-kit/tree/main/src/lib/agent/plugins) or through our high-level plugin interface.
 
-To add action capabilities you can either leverage LangChain tools or add your own custom Plugins and Actions
+<img 
+  src="/plugins.gif" 
+  width={500}
+  style={{
+    borderRadius: '10px',
+    objectFit: 'cover'
+  }}
+  alt="Plugins"
+/>
+https://starkagent.ai/plugins
+
+### Extended Capabilities
+
+To add action capabilities, you can either leverage LangChain tools or add your own custom Plugins and Actions.
 
 <Cards>
   <Card
@@ -203,15 +243,3 @@ To add action capabilities you can either leverage LangChain tools or add your o
     href="/integrate-langchain-tools"
   ></Card>
 </Cards>
-
-Explain what is an Action
-
-How they are stored (tools and schema) + implementation via plugins
-
-How to call them trought the package or the agent chat
-
-Explain that the current plugins and their actions available will be displayed in an high level interface of the Kit soon
-
-Also explain that more actions are available in integrate langchain tools
-
-Explain that they can add agent actions

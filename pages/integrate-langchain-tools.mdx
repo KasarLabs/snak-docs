@@ -1,3 +1,110 @@
-This page explain how to leverage langchain tools for TS lib
+---
+title: "Integrate LangChain Tools"
+description: "Learn how to extend your Starknet agent's capabilities using LangChain tools"
+---
 
-This page explain which possible tools can be implemented trought langchain tools
+import { Steps } from 'nextra/components'
+import { Callout } from 'nextra/components'
+import { Cards, Card } from 'nextra/components'
+import { Tabs, Tab } from 'nextra/components'
+
+# Integrate LangChain Tools
+
+LangChain tools can significantly enhance your Starknet agent's capabilities by providing access to a wide range of functionalities beyond blockchain interactions.
+
+## Overview
+
+LangChain provides a rich ecosystem of tools that enable your agent to:
+
+- Access external APIs and data sources
+- Process and analyze information
+- Interact with various services
+- Handle different types of media and content
+
+## Getting Started
+
+<Steps>
+### Install Dependencies
+
+First, add the necessary LangChain packages to your project:
+
+```bash
+pnpm add langchain @langchain/core @langchain/community
+```
+
+### Create a Tool Wrapper
+
+Create a wrapper to adapt LangChain tools to the Starknet Agent Kit format:
+
+```typescript
+// lib/agent/plugins/langchain/tools.ts
+import { Tool } from "langchain/tools";
+import { z } from "zod";
+import { StarknetToolRegistry } from "../../registry";
+
+export class LangChainToolWrapper {
+  private tool: Tool;
+
+  constructor(tool: Tool) {
+    this.tool = tool;
+  }
+
+  registerAsTool() {
+    const schema = z.object({
+      input: z.string().describe(this.tool.description)
+    });
+
+    StarknetToolRegistry.registerTool({
+      name: this.tool.name,
+      description: this.tool.description,
+      schema: schema,
+      execute: async (agent, params) => {
+        try {
+          const result = await this.tool.call(params.input);
+          return JSON.stringify({ status: "success", data: result });
+        } catch (error) {
+          return JSON.stringify({ 
+            status: "error", 
+            error: error instanceof Error ? error.message : "Unknown error" 
+          });
+        }
+      }
+    });
+  }
+}
+```
+
+### Register Tools
+
+Add your LangChain tools to your agent configuration:
+
+```typescript
+// config/agent/index.ts
+import { WikipediaQueryRun } from "langchain/tools";
+import { LangChainToolWrapper } from "../lib/agent/plugins/langchain/tools";
+
+const wikipediaTool = new WikipediaQueryRun({
+  topKResults: 3,
+  maxDocumentLength: 4000
+});
+
+new LangChainToolWrapper(wikipediaTool).registerAsTool();
+```
+</Steps>
+
+## Available Tools
+
+### Explore plugins
+
+You can explore the implemented LangChain tools and their available actions directly in the source code under [`src/lib/agent/plugins`](https://github.com/KasarLabs/starknet-agent-kit/tree/main/src/lib/agent/plugins) or through our high-level plugin interface.
+
+<img 
+  src="/plugins.gif" 
+  width={500}
+  style={{
+    borderRadius: '10px',
+    objectFit: 'cover'
+  }}
+  alt="Plugins"
+/>
+https://starkagent.ai/plugins

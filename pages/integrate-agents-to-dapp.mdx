@@ -1,30 +1,82 @@
-This page is to explain how to use starknet agent kit as a package
+---
+title: "Integrate Into Your DApp"
+description: "Learn how to integrate Starknet Agent Kit into your decentralized application"
+---
 
-It gives informations to the package and how to install it
+import { Steps } from 'nextra/components'
+import { Callout } from 'nextra/components'
+import { Cards, Card } from 'nextra/components'
 
-This explains how to run the kit as a package like this
+# Integrate Into Your DApp
 
-```js
+Starknet Agent Kit can be integrated into your existing dApp or process as an NPM package, enabling AI-powered interactions with the Starknet blockchain through natural language.
+
+## Current Features
+
+<Steps>
+### Install Package
+
+Add the Starknet Agent Kit to your project:
+
+```bash
+npm install starknet-agent-kit
+# or
+yarn add starknet-agent-kit
+# or
+pnpm add starknet-agent-kit
+```
+
+### Initialize Agent
+
+Create a new agent instance with your configuration:
+
+```typescript
 import { StarknetAgent } from "starknet-agent-kit";
 
 const agent = new StarknetAgent({
+  // AI Provider Configuration
   aiProviderApiKey: "your-ai-provider-key",
   aiProvider: "anthropic", // or 'openai', 'gemini', 'ollama'
   aiModel: "claude-3-5-sonnet-latest",
+  
+  // Starknet Configuration
   accountPrivateKey: "your-wallet-private-key",
   rpcUrl: "your-rpc-url",
 });
-
-// Execute commands in natural language
-await agent.execute("transfer 0.1 ETH to 0x123...");
-await agent.execute("What is my ETH balance?");
-await agent.execute("Swap 5 USDC for ETH");
 ```
 
-This page redirects also to the input page to explain how to add redy to go input directly (like a connect wallet button)
+### Execute Commands
 
-This pages says that we drastically improve dev x
+Use natural language to interact with Starknet:
 
-This pages explains how to configure exactly the starknet agent
+```typescript
+// Query balances
+await agent.execute("What is my ETH balance?");
 
-It explains how to limit specific tools and other config
+// Perform transfers
+await agent.execute("transfer 0.1 ETH to 0x123...");
+
+// Execute swaps
+await agent.execute("Swap 5 USDC for ETH");
+```
+</Steps>
+
+## Configuration Reference
+
+The `StarknetAgent` constructor currently accepts the following configuration options:
+
+```typescript
+interface StarknetAgentConfig {
+  // Required Parameters
+  aiProviderApiKey: string;    // Your AI provider API key
+  aiProvider: "anthropic" | "openai" | "gemini" | "ollama";  // AI model provider
+  aiModel: string;             // Model identifier (e.g., "claude-3-5-sonnet-latest")
+  accountPrivateKey: string;   // Your Starknet wallet private key
+  rpcUrl: string;             // Starknet RPC endpoint
+}
+```
+
+<Callout type="info">
+  Make sure to never expose your private keys or API keys in your code. Use environment variables or secure key management solutions.
+</Callout>
+
