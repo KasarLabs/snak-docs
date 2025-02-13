@@ -17,7 +17,7 @@ import {
 
 # Adding Agent Actions
 
-The **Starknet Agent Kit** follows a decentralized approach where each contributor can add their own actions for a specific protocol. The goal is to make it easier to understand and scale to support the entire Network by clearly isolating the logic for each protocol.
+The **Starknet Agent Kit** follows a decentralized approach where each contributor can add their own actions for a specific plugin. The goal is to make it easier to understand and scale to support the entire Network by clearly isolating the logic for each plugin.
 
 --Tutorial video--
 
@@ -25,18 +25,20 @@ The **Starknet Agent Kit** follows a decentralized approach where each contribut
 
 ### Plugins Library (`lib/agent/plugins/`)
 
-Each protocol implementation should be placed in its own directory under `lib/agent/plugins/` with the following structure:
+Each plugin implementation should be placed in its own directory under `lib/agent/plugins/` with the following structure:
 
 ```
 lib/agent/plugins/
-└── [protocol-name]/
-    ├── abis/         # Protocol-specific ABIs (e.g., accounts, tokens, etc.)
-    ├── actions/      # Implementations of protocol actions
-    ├── utils/        # Utility functions and classes specific to the protocol
-    ├── constant/     # Constants and addresses specific to the protocol
-    ├── interface/    # Interfaces
-    ├── schemas/      # Validation schemas
-    └── types/        # Type definitions specific to the protocol
+└── [plugin-name]/
+    ├── abis/         # Plugin-specific ABIs
+    ├── actions/      # Plugin actions
+    ├── tools/        # Plugin tools
+    ├── schema/       # Plugin schema
+    ├── utils/        # Utility functions
+    ├── constant/     # Constants and addresses
+    ├── interface/    # Interfaces and schemas
+    └── types/        # Type definitions
+    └── readme.md
 ```
 
 <Callout type="info" emoji="ℹ️">
@@ -44,20 +46,24 @@ lib/agent/plugins/
   under `lib/agent/plugins/core/` using the same underlying subdirectories.
 </Callout>
 
-For example, for a protocol named `myProtocol`, the structure could look like:
+For example, for a plugin named `myPlugin`, the structure could look like:
 
 ```
-lib/agent/plugins/myProtocol/
+lib/agent/plugins/myPlugin/
 ├── abis/
 │   └── accountABI.json
 ├── actions/
 │   └── myAction.ts
+├── tools/
+│   └──myToolsAction.ts
+├── schema/
+│   └──myActionSchema.ts
 ├── utils/
 │   └── formatter.ts
-├── constant/
+├── constants/
 │   └── networkConstants.ts
-├── interface/
-│   └── myActionSchema.ts
+├── interfaces/
+│   └── myActionInterfaces.ts
 └── types/
     └── myActionTypes.ts
 ```
@@ -69,7 +75,7 @@ lib/agent/plugins/myProtocol/
 <Steps>
 ### Create the Validation Schema
 
-Create a schema in `lib/agent/plugins/myProtocol/schema/myActionSchema.ts`:
+Create a schema in `lib/agent/plugins/myPlugin/schema/myActionSchema.ts`:
 
 ```typescript
 import { z } from "zod";
@@ -83,17 +89,17 @@ export const myActionSchema = z.object({
 
 ### Implement the Action
 
-Place your action implementation in `lib/agent/plugins/myProtocol/actions/myAction.ts`:
+Place your action implementation in `lib/agent/plugins/myPlugin/actions/myAction.ts`:
 
 ```typescript
 import { myActionSchema } from "../interface/myActionSchema";
 
 export const myAction = async (
   agent: StarknetAgentInterface,
-  params: z.infer<typeof myActionSchema>,
+  params: z.infer<typeof myActionSchema>
 ): Promise<string> => {
   try {
-    // Protocol-specific implementation for myProtocol
+    // Plugin-specific implementation for myPlugin
     const result = {}; // Replace with the actual logic
     return JSON.stringify({
       status: "success",
@@ -108,35 +114,44 @@ export const myAction = async (
 };
 ```
 
+<Callout type="info" emoji="ℹ️">
+If you want to avoid working directly with Zod objects but still need the type information, you can use `z.infer<typeof YourZodSchema>` to extract and use the TypeScript type definition instead of the full Zod schema.
+</Callout>
+
 ### Add Utilities, Constants, or Types
 
-- Place protocol-specific constants in `lib/agent/plugins/myProtocol/constant/`
-- Add helper functions in `lib/agent/plugins/myProtocol/utils/`
-- Define any additional types in `lib/agent/plugins/myProtocol/types/`
+- Place plugin-specific constants in `lib/agent/plugins/myPlugin/constant/`
+- Add helper functions in `lib/agent/plugins/myPlugin/utils/`
+- Define any additional types in `lib/agent/plugins/myPlugin/types/`
 
 ### Register Your Action
 
-After implementing the action, register it so the agent can recognize and use it. For example:
+Register your actions tools in `lib/agent/plugins/myPlugin/tools/myActionsTools.ts` so the agent can recognize and use it. For example:
 
 ```typescript
 import { StarknetToolRegistry } from "path/to/registry";
-import { myActionSchema } from "../interface/myActionSchema";
+import { myActionSchema } from "../schema/myActionSchema";
 import { myAction } from "../actions/myAction";
 
-StarknetToolRegistry.registerTool({
-  name: "my_action",
-  description: "Description of what your action does",
-  schema: myActionSchema,
-  execute: myAction,
-});
+export const registerMyPluginTools = () => {
+
+  StarknetToolRegistry.registerTool({
+    name: "my_action",
+    plugin: "myPlugin"
+    description: "Description of what your action does",
+    schema: myActionSchema,
+    execute: myAction,
+  });
+
+};
 ```
 
 ### Test Your Action
 
-Ensure your action works as expected by writing tests. Create a test file in `test/unit-test/plugins/myProtocol/myAction.spec.ts`:
+Ensure your action works as expected by writing tests. Create a test file in `test/unit-test/plugins/myPlugin/myAction.spec.ts`:
 
 ```typescript
-// test/unit-test/plugins/myProtocol/myAction.spec.ts
+// test/unit-test/plugins/myPlugin/myAction.spec.ts
 
 describe("myAction", () => {
   let agent: StarknetAgentInterface;
@@ -161,17 +176,17 @@ describe("myAction", () => {
 
 <Tabs items={['Organization', 'Error Handling', 'Input Validation', 'Testing', 'Documentation']}>
   <Tab>
-    ### Tool Organization
+    ### Plugin Organization
 
     Follow these organizational principles:
 
-    - Place tools in `src/lib/agent/plugins/[protocol-name]/`
     - Use consistent naming:
       - plugins: camelCase
       - Types: PascalCase
       - Files: kebab-case
     - One tool per file
     - Group related tools logically
+
   </Tab>
   <Tab>
     ### Error Handling
@@ -188,6 +203,7 @@ describe("myAction", () => {
       throw new AgentError("UNKNOWN_ERROR", "Unexpected error");
     }
     ```
+
   </Tab>
   <Tab>
     ### Input Validation
@@ -203,6 +219,7 @@ describe("myAction", () => {
       amount: z.string().regex(/^\d+$/).describe("Transfer amount"),
     });
     ```
+
   </Tab>
   <Tab>
     ### Testing
@@ -220,11 +237,12 @@ describe("myAction", () => {
       });
     });
     ```
+
   </Tab>
   <Tab>
     ### Documentation
 
-    Document your code thoroughly:
+    Document your code thoroughly using for example the JSDOC:
 
     ```typescript
     /**
@@ -234,5 +252,6 @@ describe("myAction", () => {
      * @returns {Promise<TransferResult>} Transfer result
      */
     ```
+
   </Tab>
 </Tabs>
