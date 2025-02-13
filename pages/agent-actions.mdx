@@ -64,6 +64,7 @@ ensure desired and secure Agent behavior.
 Actions are stored and managed through a central registry system in `lib/agent/tools.ts`. Each action is registered as a tool with:
 
 - `name`: A unique name
+- `plugin` : the name of the plugin
 - `description`: The tool description for the model to understand it's behavior
 - `schema`: Input schema (using Zod) for the model to understand which parameters it should extract from the request
 - `execute`: The function that will be executed by LangChain
@@ -72,6 +73,7 @@ Actions are stored and managed through a central registry system in `lib/agent/t
 // Example tool registration
 StarknetToolRegistry.registerTool({
   name: "transfer",
+  plugin : "token"
   description: "Transfer ERC20 tokens to a specific address",
   schema: Transferschema,
   execute: transfer,
@@ -81,19 +83,22 @@ StarknetToolRegistry.registerTool({
 ### Plugin Architecture
 
 <Callout type="info">
-  Each protocol has its own directory under `lib/agent/plugins/` with a
+  Each plugin has its own directory under `lib/agent/plugins/` with a
   standardized structure for organization.
 </Callout>
 
 ```
 lib/agent/plugins/
-└── [protocol-name]/
-    ├── abis/         # Protocol-specific ABIs
-    ├── actions/      # Protocol actions
+└── [plugin-name]/
+    ├── abis/         # Plugin-specific ABIs
+    ├── actions/      # Plugin actions
+    ├── tools/        # Plugin tools
+    ├── schema/       # Plugin schema
     ├── utils/        # Utility functions
     ├── constant/     # Constants and addresses
     ├── interface/    # Interfaces and schemas
-    └── types/        # Type definitions
+    └── types/        # Type definitions 
+    └── readme.md     
 ```
 ## Interacting with Actions
 

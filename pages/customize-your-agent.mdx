@@ -51,7 +51,7 @@ Below is a list of fields for defining an agent:
 | `knowledge`                    | Areas of expertise your agent should have. |
 | `interval`                     | Time between actions (in milliseconds) for autonomous mode. |
 | `chat_id`                      | Unique identifier for chat sessions. |
-| `external_client`              | List of external platforms (e.g., 'discord', 'twitter'). |
+| `external_client`              | List of external platforms (e.g., 'discord', 'wikipedia'). |
 | `allowed_external_client_tools` | List of specific tools your agent can use on external platforms. |
 
 ## Transaction Limits
@@ -97,7 +97,12 @@ TWITTER_USERNAME="YOUR_TWITTER_USERNAME"
 TWITTER_PASSWORD="YOUR_TWITTER_PASSWORD"
 TWITTER_EMAIL="YOUR_TWITTER_EMAIL"
 
-# Discord Configuration (Optional)
+# Telegram Configuration 
+TELEGRAM_BOT_TOKEN="YOUR_TELEGRAM_BOT_TOKEN"
+TELEGRAM_PUBLIC_URL="YOUR_TELEGRAM_PUBLIC_URL"
+TELEGRAM_BOT_PORT=YOUR_BOT_PORT
+
+# Discord Configuration 
 DISCORD_BOT_TOKEN="YOUR_DISCORD_BOT_TOKEN"
 DISCORD_CHANNEL_ID="YOUR_DISCORD_CHANNEL_ID"
 ```
