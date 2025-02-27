@@ -81,31 +81,17 @@ The agent will check these limits before executing any transfers. If a transfer 
 
 Add these variables to your `.env` file:
 
-```env
-# Twitter Configuration
-# Choose authentication mode - must be either "API" or "CREDIDENTIALS"
-TWITTER_AUTH_MODE="YOUR_TWITTER_CONFIGURATION_MODE"
+To configure your environment for social media, you must establish the appropriate connections with the various platforms. This step is essential to enable your agent to interact with social networks, publish content, monitor mentions, and analyze the performance of your posts.
 
-# If using API mode, fill these:
-TWITTER_API="YOUR_TWITTER_API"
-TWITTER_API_SECRET="YOUR_TWITTER_API_SECRET"
-TWITTER_ACCESS_TOKEN="YOUR_TWITTER_ACCESS_TOKEN"
-TWITTER_ACCESS_TOKEN_SECRET="YOUR_TWITTER_ACCESS_TOKEN_SECRET"
+| Social Network | Link to README |
+|---------------|---------------------|
+| Twitter       | [Twitter README](https://github.com/KasarLabs/snak/blob/main/plugins/twitter/readme.md) |
+| Discord       | [Discord README](https://github.com/yourusername/agent-project/blob/main/docs/discord-integration.md) |
+| Telegram      | [Telegram README](https://github.com/KasarLabs/snak/blob/main/plugins/telegram/readme.md) |
 
-# If using CREDENTIALS mode, fill these:
-TWITTER_USERNAME="YOUR_TWITTER_USERNAME"
-TWITTER_PASSWORD="YOUR_TWITTER_PASSWORD"
-TWITTER_EMAIL="YOUR_TWITTER_EMAIL"
 
-# Telegram Configuration 
-TELEGRAM_BOT_TOKEN="YOUR_TELEGRAM_BOT_TOKEN"
-TELEGRAM_PUBLIC_URL="YOUR_TELEGRAM_PUBLIC_URL"
-TELEGRAM_BOT_PORT=YOUR_BOT_PORT
 
-# Discord Configuration 
-DISCORD_BOT_TOKEN="YOUR_DISCORD_BOT_TOKEN"
-DISCORD_CHANNEL_ID="YOUR_DISCORD_CHANNEL_ID"
-```
+
 
 ## Running Your Agent
 
