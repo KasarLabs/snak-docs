@@ -37,7 +37,7 @@ pnpm add langchain @langchain/core @langchain/community
 Create a wrapper to adapt LangChain tools to the Starknet Agent Kit format:
 
 ```typescript
-// lib/agent/plugins/langchain/tools.ts
+// ./plugins/langchain/tools.ts
 import { Tool } from "langchain/tools";
 import { z } from "zod";
 import { StarknetToolRegistry } from "../../registry";
@@ -81,7 +81,7 @@ Add your LangChain tools to your agent configuration:
 ```typescript
 // config/agent/index.ts
 import { WikipediaQueryRun } from "langchain/tools";
-import { LangChainToolWrapper } from "../lib/agent/plugins/langchain/tools";
+import { LangChainToolWrapper } from ".././plugins/langchain/tools";
 
 const wikipediaTool = new WikipediaQueryRun({
   topKResults: 3,
@@ -96,7 +96,7 @@ new LangChainToolWrapper(wikipediaTool).registerAsTool();
 
 ### Explore plugins
 
-You can explore the implemented LangChain tools and their available actions directly in the source code under [`src/lib/agent/plugins`](https://github.com/KasarLabs/starknet-agent-kit/tree/main/src/lib/agent/plugins) or through our high-level plugin interface.
+You can explore the implemented LangChain tools and their available actions directly in the source code under [`./plugins`](https://github.com/KasarLabs/starknet-agent-kit/tree/main/src/./plugins) or through our high-level plugin interface.
 
 <img 
   src="/plugins.gif" 
