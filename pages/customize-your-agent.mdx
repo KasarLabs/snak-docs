@@ -34,7 +34,8 @@ Create your agent configuration file in the `config/agents/` directory. You can 
   "allowed_external_client_tools": [
     "first allowed_external_client_tools",
     "second allowed_external_client_tools"
-  ]
+  ],
+  "mcp" : true || false
 }
 ```
 
@@ -52,26 +53,8 @@ Below is a list of fields for defining an agent:
 | `interval`                     | Time between actions (in milliseconds) for autonomous mode. |
 | `chat_id`                      | Unique identifier for chat sessions. |
 | `external_client`              | List of external platforms (e.g., 'discord', 'wikipedia'). |
-| `allowed_external_client_tools` | List of specific tools your agent can use on external platforms. |
-
-## Transaction Limits
-
-Set up transaction limits in the `config/limit/config-limit.json` file to control your agent's spending:
-
-```json
-{
-  "transfer_limit": [
-    {
-      "symbol": "ETH",
-      "amount": "0.000001"
-    },
-    {
-      "symbol": "STRK",
-      "amount": "2"
-    }
-  ]
-}
-```
+| `allowed_external_client_tools`| List of specific tools your agent can use on external platforms. |
+| `mcp`                          | Boolean value that enables or disables MCP (Model Context Protocol) features. . |
 
 The agent will check these limits before executing any transfers. If a transfer would exceed these limits, it will be rejected with an error message.
 
