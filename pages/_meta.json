@@ -22,6 +22,9 @@
   "add-agent-actions": {
     "title": "Adding Agent Actions"
   },
+  "mcp_integration" : {
+    "title": "MCPs Server Integration"
+  },
   "integrate-langchain-tools": {
     "title": "Integrate LangChain Tools"
   },
