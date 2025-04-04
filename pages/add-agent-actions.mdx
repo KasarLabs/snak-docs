@@ -17,55 +17,67 @@ import {
 
 # Adding Agent Actions
 
-The **Snak** follows a decentralized approach where each contributor can add their own actions for a specific plugin. The goal is to make it easier to understand and scale to support the entire Network by clearly isolating the logic for each plugin.
+Snak follows a decentralized approach where each contributor can add their own actions for a specific plugin. Each plugin is implemented as a separate package, allowing for modular development and clear dependency management. The goal is to make it easier to understand and scale to support the entire Network by clearly isolating the logic for each plugin.
 
 --Tutorial video--
 
 ## Folder Organization
 
-### Plugins Library (`lib/agent/plugins/`)
+### Plugins Library (`./plugins/`)
 
-Each plugin implementation should be placed in its own directory under `lib/agent/plugins/` with the following structure:
+Each plugin implementation should be placed in its own directory under `./plugins/` with the following structure:
 
 ```
-lib/agent/plugins/
+/plugins/
 └── [plugin-name]/
-    ├── abis/         # Plugin-specific ABIs
-    ├── actions/      # Plugin actions
-    ├── tools/        # Plugin tools
-    ├── schema/       # Plugin schema
-    ├── utils/        # Utility functions
-    ├── constant/     # Constants and addresses
-    ├── interface/    # Interfaces and schemas
-    └── types/        # Type definitions
+    ├── src/
+    │   ├── abis/         # Plugin-specific ABIs
+    │   ├── actions/      # Plugin actions
+    │   ├── tools/        # Plugin tools
+    │   ├── schema/       # Plugin schema
+    │   ├── utils/        # Utility functions
+    │   ├── constant/     # Constants and addresses
+    │   ├── interface/    # Interfaces and schemas
+    │   ├── types/        # Type definitions
+    │   └── index.ts
+    ├── test/
+    ├── package.json
+    ├── tsconfig.json
+    ├── tsconfig.build.json
     └── readme.md
 ```
 
 <Callout type="info" emoji="ℹ️">
-  For core actions such as RPC plugins or shared utilities, please add them
-  under `lib/agent/plugins/core/` using the same underlying subdirectories.
+To create your own plugin, you can use the command `npx create-plugins <name_of_your_plugins>`, which will automatically generate all the necessary files and folder structure required for plugin development.
 </Callout>
 
 For example, for a plugin named `myPlugin`, the structure could look like:
 
 ```
-lib/agent/plugins/myPlugin/
-├── abis/
-│   └── accountABI.json
-├── actions/
-│   └── myAction.ts
-├── tools/
-│   └──myToolsAction.ts
-├── schema/
-│   └──myActionSchema.ts
-├── utils/
-│   └── formatter.ts
-├── constants/
-│   └── networkConstants.ts
-├── interfaces/
-│   └── myActionInterfaces.ts
-└── types/
-    └── myActionTypes.ts
+./plugins/myPlugin/
+  ├── src/
+  │  ├── abis/
+  │  │   └── accountABI.json
+  │  ├── actions/
+  │  │   └── myAction.ts
+  │  ├── tools/
+  │  │   └──myToolsAction.ts
+  │  ├── schema/
+  │  │   └──myActionSchema.ts
+  │  ├── utils/
+  │  │   └── formatter.ts
+  │  ├── constants/
+  │  │   └── networkConstants.ts
+  │  ├── interfaces/
+  │  │   └── myActionInterfaces.ts
+  │  └── types/
+  │      └── myActionTypes.ts
+  ├── test/
+  │    └── index.ts
+  ├── package.json
+  ├── tsconfig.json
+  ├── tsconfig.build.json
+  └── readme.md
 ```
 
 ---
@@ -75,7 +87,7 @@ lib/agent/plugins/myPlugin/
 <Steps>
 ### Create the Validation Schema
 
-Create a schema in `lib/agent/plugins/myPlugin/schema/myActionSchema.ts`:
+Create a schema in `./plugins/myPlugin/schema/myActionSchema.ts`:
 
 ```typescript
 import { z } from "zod";
@@ -89,7 +101,7 @@ export const myActionSchema = z.object({
 
 ### Implement the Action
 
-Place your action implementation in `lib/agent/plugins/myPlugin/actions/myAction.ts`:
+Place your action implementation in `./plugins/myPlugin/actions/myAction.ts`:
 
 ```typescript
 import { myActionSchema } from "../interface/myActionSchema";
@@ -120,22 +132,22 @@ If you want to avoid working directly with Zod objects but still need the type i
 
 ### Add Utilities, Constants, or Types
 
-- Place plugin-specific constants in `lib/agent/plugins/myPlugin/constant/`
-- Add helper functions in `lib/agent/plugins/myPlugin/utils/`
-- Define any additional types in `lib/agent/plugins/myPlugin/types/`
+- Place plugin-specific constants in `./plugins/myPlugin/constant/`
+- Add helper functions in `./plugins/myPlugin/utils/`
+- Define any additional types in `./plugins/myPlugin/types/`
 
 ### Register Your Action
 
-Register your actions tools in `lib/agent/plugins/myPlugin/tools/myActionsTools.ts` so the agent can recognize and use it. For example:
+Register your actions tools in `./plugins/myPlugin/tools/myActionsTools.ts` so the agent can recognize and use it. For example:
 
 ```typescript
-import { StarknetToolRegistry } from "path/to/registry";
+import { StarknetTool } from "path/to/registry";
 import { myActionSchema } from "../schema/myActionSchema";
 import { myAction } from "../actions/myAction";
 
-export const registerMyPluginTools = () => {
+export const registerMyPluginTools = (StarknetToolRegistry : StarknetTool[]) => {
 
-  StarknetToolRegistry.registerTool({
+  StarknetToolRegistry.push({
     name: "my_action",
     plugin: "myPlugin"
     description: "Description of what your action does",

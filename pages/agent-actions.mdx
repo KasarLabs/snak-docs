@@ -61,7 +61,7 @@ ensure desired and secure Agent behavior.
 
 ### Tool Registry System
 
-Actions are stored and managed through a central registry system in `lib/agent/tools.ts`. Each action is registered as a tool with:
+Actions are stored and managed through a central registry system in `agents/src/tools.ts`. Each action is registered as a tool with:
 
 - `name`: A unique name
 - `plugin` : the name of the plugin
@@ -83,21 +83,27 @@ StarknetToolRegistry.registerTool({
 ### Plugin Architecture
 
 <Callout type="info">
-  Each plugin has its own directory under `lib/agent/plugins/` with a
-  standardized structure for organization.
+  Each plugin has its own directory under `./plugins/` with a standardized
+  structure for organization.
 </Callout>
 
 ```
-lib/agent/plugins/
+/plugins/
 └── [plugin-name]/
-    ├── abis/         # Plugin-specific ABIs
-    ├── actions/      # Plugin actions
-    ├── tools/        # Plugin tools
-    ├── schema/       # Plugin schema
-    ├── utils/        # Utility functions
-    ├── constant/     # Constants and addresses
-    ├── interface/    # Interfaces and schemas
-    └── types/        # Type definitions
+    ├── src/
+    │   ├── abis/         # Plugin-specific ABIs
+    │   ├── actions/      # Plugin actions
+    │   ├── tools/        # Plugin tools
+    │   ├── schema/       # Plugin schema
+    │   ├── utils/        # Utility functions
+    │   ├── constant/     # Constants and addresses
+    │   ├── interface/    # Interfaces and schemas
+    │   ├── types/        # Type definitions
+    │   └── index.ts
+    ├── test/
+    ├── package.json
+    ├── tsconfig.json
+    ├── tsconfig.build.json
     └── readme.md
 ```
 
@@ -224,7 +230,7 @@ There are currently four ways to run actions through your agents:
 
 ### Explore plugins
 
-You can explore the implemented plugins and their available actions directly in the source code under [`src/lib/agent/plugins`](https://github.com/KasarLabs/snak/tree/main/src/lib/agent/plugins) or through our high-level plugin interface.
+You can explore the implemented plugins and their available actions directly in the source code under [`./plugins`](https://github.com/KasarLabs/snak/tree/main/plugins) or through our high-level plugin interface.
 
 <img
   src="/plugins.gif"
@@ -235,8 +241,11 @@ You can explore the implemented plugins and their available actions directly in 
   }}
   alt="Plugins"
 />
-https://starkagent.ai/plugins
 
+<Callout type="info">
+You can explore our complete catalog of plugins and their associated actions on [Starkagent](https://www.starkagent.ai/plugins), where detailed documentation is available for each integration.
+
+</Callout>
 ### Extended Capabilities
 
 To add action capabilities, you can either leverage LangChain tools or add your own custom Plugins and Actions.

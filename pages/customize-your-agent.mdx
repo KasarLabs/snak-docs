@@ -28,7 +28,8 @@ Create your agent configuration file in the `config/agents/` directory. You can 
   "allowed_external_client_tools": [
     "first allowed_external_client_tools",
     "second allowed_external_client_tools"
-  ]
+  ],
+  "mcp" : true || false
 }
 ```
 
@@ -36,36 +37,18 @@ Create your agent configuration file in the `config/agents/` directory. You can 
 
 Below is a list of fields for defining an agent:
 
-| Field                           | Description                                                      |
-| ------------------------------- | ---------------------------------------------------------------- |
-| `name`                          | Your agent's identifier.                                         |
-| `bio`                           | A brief description of your agent's purpose.                     |
-| `lore`                          | Background information that defines your agent's character.      |
-| `objectif`                      | A list of tasks and goals your agent should accomplish.          |
-| `knowledge`                     | Areas of expertise your agent should have.                       |
-| `interval`                      | Time between actions (in milliseconds) for autonomous mode.      |
-| `chat_id`                       | Unique identifier for chat sessions.                             |
-| `external_client`               | List of external platforms (e.g., 'discord', 'wikipedia').       |
-| `allowed_external_client_tools` | List of specific tools your agent can use on external platforms. |
-
-## Transaction Limits
-
-Set up transaction limits in the `config/limit/config-limit.json` file to control your agent's spending:
-
-```json
-{
-  "transfer_limit": [
-    {
-      "symbol": "ETH",
-      "amount": "0.000001"
-    },
-    {
-      "symbol": "STRK",
-      "amount": "2"
-    }
-  ]
-}
-```
+| Field                           | Description                                                                     |
+| ------------------------------- | ------------------------------------------------------------------------------- |
+| `name`                          | Your agent's identifier.                                                        |
+| `bio`                           | A brief description of your agent's purpose.                                    |
+| `lore`                          | Background information that defines your agent's character.                     |
+| `objectif`                      | A list of tasks and goals your agent should accomplish.                         |
+| `knowledge`                     | Areas of expertise your agent should have.                                      |
+| `interval`                      | Time between actions (in milliseconds) for autonomous mode.                     |
+| `chat_id`                       | Unique identifier for chat sessions.                                            |
+| `external_client`               | List of external platforms (e.g., 'discord', 'wikipedia').                      |
+| `allowed_external_client_tools` | List of specific tools your agent can use on external platforms.                |
+| `mcp`                           | Boolean value that enables or disables MCP (Model Context Protocol) features. . |
 
 The agent will check these limits before executing any transfers. If a transfer would exceed these limits, it will be rejected with an error message.
 
@@ -75,31 +58,13 @@ The agent will check these limits before executing any transfers. If a transfer 
 
 Add these variables to your `.env` file:
 
-```env
-# Twitter Configuration
-# Choose authentication mode - must be either "API" or "CREDIDENTIALS"
-TWITTER_AUTH_MODE="YOUR_TWITTER_CONFIGURATION_MODE"
+To configure your environment for social media, you must establish the appropriate connections with the various platforms. This step is essential to enable your agent to interact with social networks, publish content, monitor mentions, and analyze the performance of your posts.
 
-# If using API mode, fill these:
-TWITTER_API="YOUR_TWITTER_API"
-TWITTER_API_SECRET="YOUR_TWITTER_API_SECRET"
-TWITTER_ACCESS_TOKEN="YOUR_TWITTER_ACCESS_TOKEN"
-TWITTER_ACCESS_TOKEN_SECRET="YOUR_TWITTER_ACCESS_TOKEN_SECRET"
-
-# If using CREDENTIALS mode, fill these:
-TWITTER_USERNAME="YOUR_TWITTER_USERNAME"
-TWITTER_PASSWORD="YOUR_TWITTER_PASSWORD"
-TWITTER_EMAIL="YOUR_TWITTER_EMAIL"
-
-# Telegram Configuration
-TELEGRAM_BOT_TOKEN="YOUR_TELEGRAM_BOT_TOKEN"
-TELEGRAM_PUBLIC_URL="YOUR_TELEGRAM_PUBLIC_URL"
-TELEGRAM_BOT_PORT=YOUR_BOT_PORT
-
-# Discord Configuration
-DISCORD_BOT_TOKEN="YOUR_DISCORD_BOT_TOKEN"
-DISCORD_CHANNEL_ID="YOUR_DISCORD_CHANNEL_ID"
-```
+| Social Network | Link to README                                                                                        |
+| -------------- | ----------------------------------------------------------------------------------------------------- |
+| Twitter        | [Twitter README](https://github.com/KasarLabs/snak/blob/main/plugins/twitter/readme.md)               |
+| Discord        | [Discord README](https://github.com/yourusername/agent-project/blob/main/docs/discord-integration.md) |
+| Telegram       | [Telegram README](https://github.com/KasarLabs/snak/blob/main/plugins/telegram/readme.md)             |
 
 ## Running Your Agent
 
