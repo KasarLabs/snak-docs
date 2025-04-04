@@ -13,10 +13,7 @@ Create your agent configuration file in the `config/agents/` directory. You can 
 {
   "name": "Your Agent name",
   "bio": "Your AI Agent Bio",
-  "lore": [
-    "Some lore of your AI Agent 1",
-    "Some lore of your AI Agent 2"
-  ],
+  "lore": ["Some lore of your AI Agent 1", "Some lore of your AI Agent 2"],
   "objectif": [
     "first objectif that your AI Agent need to follow",
     "second objectif that your AI Agent need to follow"
@@ -27,10 +24,7 @@ Create your agent configuration file in the `config/agents/` directory. You can 
   ],
   "interval": "Your agent interval between each transaction in ms",
   "chat_id": "Your Agent Chat-id",
-  "external_client": [
-    "first external_client",
-    "second external_client"
-  ],
+  "external_client": ["first external_client", "second external_client"],
   "allowed_external_client_tools": [
     "first allowed_external_client_tools",
     "second allowed_external_client_tools"
@@ -42,16 +36,16 @@ Create your agent configuration file in the `config/agents/` directory. You can 
 
 Below is a list of fields for defining an agent:
 
-| Field                         | Description |
-|--------------------------------|------------|
-| `name`                         | Your agent's identifier. |
-| `bio`                          | A brief description of your agent's purpose. |
-| `lore`                         | Background information that defines your agent's character. |
-| `objectif`                     | A list of tasks and goals your agent should accomplish. |
-| `knowledge`                    | Areas of expertise your agent should have. |
-| `interval`                     | Time between actions (in milliseconds) for autonomous mode. |
-| `chat_id`                      | Unique identifier for chat sessions. |
-| `external_client`              | List of external platforms (e.g., 'discord', 'wikipedia'). |
+| Field                           | Description                                                      |
+| ------------------------------- | ---------------------------------------------------------------- |
+| `name`                          | Your agent's identifier.                                         |
+| `bio`                           | A brief description of your agent's purpose.                     |
+| `lore`                          | Background information that defines your agent's character.      |
+| `objectif`                      | A list of tasks and goals your agent should accomplish.          |
+| `knowledge`                     | Areas of expertise your agent should have.                       |
+| `interval`                      | Time between actions (in milliseconds) for autonomous mode.      |
+| `chat_id`                       | Unique identifier for chat sessions.                             |
+| `external_client`               | List of external platforms (e.g., 'discord', 'wikipedia').       |
 | `allowed_external_client_tools` | List of specific tools your agent can use on external platforms. |
 
 ## Transaction Limits
@@ -97,12 +91,12 @@ TWITTER_USERNAME="YOUR_TWITTER_USERNAME"
 TWITTER_PASSWORD="YOUR_TWITTER_PASSWORD"
 TWITTER_EMAIL="YOUR_TWITTER_EMAIL"
 
-# Telegram Configuration 
+# Telegram Configuration
 TELEGRAM_BOT_TOKEN="YOUR_TELEGRAM_BOT_TOKEN"
 TELEGRAM_PUBLIC_URL="YOUR_TELEGRAM_PUBLIC_URL"
 TELEGRAM_BOT_PORT=YOUR_BOT_PORT
 
-# Discord Configuration 
+# Discord Configuration
 DISCORD_BOT_TOKEN="YOUR_DISCORD_BOT_TOKEN"
 DISCORD_CHANNEL_ID="YOUR_DISCORD_CHANNEL_ID"
 ```

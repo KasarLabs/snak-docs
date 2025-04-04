@@ -1,6 +1,6 @@
-# Starknet Agent Kit Documentation
+# Snak Documentation
 
-Welcome to the Starknet Agent Kit (SAK) documentation. This kit provides a powerful interface for interacting with the Starknet blockchain using natural language processing and AI capabilities.
+Welcome to the Snak (SAK) documentation. This kit provides a powerful interface for interacting with the Starknet blockchain using natural language processing and AI capabilities.
 
 ## Documentation Structure
 

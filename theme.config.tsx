@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { BsTelegram, BsTwitter, BsGithub } from "react-icons/bs";
 import Link from "next/link";
 import { useTheme } from "next-themes";
-import { DocsThemeConfig } from 'nextra-theme-docs';
+import { DocsThemeConfig } from "nextra-theme-docs";
 
 interface FooterLinkProps {
   href: string;
@@ -55,9 +55,7 @@ const Footer: React.FC = () => {
   const isDarkTheme = resolvedTheme === "dark";
 
   return (
-    <footer
-      className={`w-full`}
-    >
+    <footer className={`w-full`}>
       <div className="container mx-auto px-4 py-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
           {/* Logo & Terms */}
@@ -124,43 +122,42 @@ const Footer: React.FC = () => {
 };
 
 const config: DocsThemeConfig = {
-  logo: (
-    <div className="flex items-center space-x-2">
-      <Image
-        src="/starknet.png"
-        alt="Logo"
-        width={32}
-        height={32}
-        className="w-8 h-8"
-      />
-      <span className="font-semibold text-base md:text-lg">
-        Starknet Agent Kit
-      </span>
-    </div>
-  ),
-  project: {
-    link: "https://github.com/kasarlabs/starknet-agent-kit",
+  logo: () => {
+    const { resolvedTheme } = useTheme();
+    const isDarkTheme = resolvedTheme === "dark";
+
+    return (
+      <div className="flex items-center space-x-2">
+        <Image
+          src={
+            isDarkTheme
+              ? "https://raw.githubusercontent.com/KasarLabs/brand/main/projects/snak/snak-logo-black-no-bg.png"
+              : "https://raw.githubusercontent.com/KasarLabs/brand/main/projects/snak/snak-logo-white-no-bg.png"
+          }
+          alt="Logo"
+          width={70}
+          height={70}
+          className="w-[4.32rem] h-[2.88rem]"
+        />
+      </div>
+    );
   },
-  docsRepositoryBase:
-    "https://github.com/kasarlabs/starknet-agent-kit/tree/main",
+  project: {
+    link: "https://github.com/kasarlabs/snak",
+  },
+  docsRepositoryBase: "https://github.com/kasarlabs/snak/tree/main",
   useNextSeoProps() {
     const { asPath } = useRouter();
     return {
-      titleTemplate:
-        asPath !== "/"
-          ? "%s – Starknet Agent Kit"
-          : "Starknet Agent Kit Documentation",
+      titleTemplate: asPath !== "/" ? "%s – Snak" : "Snak Documentation",
     };
   },
   head: () => (
     <>
       <link rel="icon" href="/favicon.ico" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <meta property="og:title" content="Starknet Agent Kit Documentation" />
-      <meta
-        property="og:description"
-        content="Documentation for Starknet Agent Kit"
-      />
+      <meta property="og:title" content="Snak Documentation" />
+      <meta property="og:description" content="Documentation for Snak" />
     </>
   ),
   primaryHue: {
@@ -179,4 +176,4 @@ const config: DocsThemeConfig = {
   },
 };
 
-export default config
+export default config;

@@ -17,7 +17,7 @@ import {
 
 # Adding Agent Actions
 
-The **Starknet Agent Kit** follows a decentralized approach where each contributor can add their own actions for a specific plugin. The goal is to make it easier to understand and scale to support the entire Network by clearly isolating the logic for each plugin.
+The **Snak** follows a decentralized approach where each contributor can add their own actions for a specific plugin. The goal is to make it easier to understand and scale to support the entire Network by clearly isolating the logic for each plugin.
 
 --Tutorial video--
 
@@ -96,7 +96,7 @@ import { myActionSchema } from "../interface/myActionSchema";
 
 export const myAction = async (
   agent: StarknetAgentInterface,
-  params: z.infer<typeof myActionSchema>
+  params: z.infer<typeof myActionSchema>,
 ): Promise<string> => {
   try {
     // Plugin-specific implementation for myPlugin

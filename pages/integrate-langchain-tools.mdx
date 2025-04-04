@@ -3,10 +3,10 @@ title: "Integrate LangChain Tools"
 description: "Learn how to extend your Starknet agent's capabilities using LangChain tools"
 ---
 
-import { Steps } from 'nextra/components'
-import { Callout } from 'nextra/components'
-import { Cards, Card } from 'nextra/components'
-import { Tabs, Tab } from 'nextra/components'
+import { Steps } from "nextra/components";
+import { Callout } from "nextra/components";
+import { Cards, Card } from "nextra/components";
+import { Tabs, Tab } from "nextra/components";
 
 # Integrate LangChain Tools
 
@@ -34,7 +34,7 @@ pnpm add langchain @langchain/core @langchain/community
 
 ### Create a Tool Wrapper
 
-Create a wrapper to adapt LangChain tools to the Starknet Agent Kit format:
+Create a wrapper to adapt LangChain tools to the Snak format:
 
 ```typescript
 // lib/agent/plugins/langchain/tools.ts
@@ -51,7 +51,7 @@ export class LangChainToolWrapper {
 
   registerAsTool() {
     const schema = z.object({
-      input: z.string().describe(this.tool.description)
+      input: z.string().describe(this.tool.description),
     });
 
     StarknetToolRegistry.registerTool({
@@ -63,12 +63,12 @@ export class LangChainToolWrapper {
           const result = await this.tool.call(params.input);
           return JSON.stringify({ status: "success", data: result });
         } catch (error) {
-          return JSON.stringify({ 
-            status: "error", 
-            error: error instanceof Error ? error.message : "Unknown error" 
+          return JSON.stringify({
+            status: "error",
+            error: error instanceof Error ? error.message : "Unknown error",
           });
         }
-      }
+      },
     });
   }
 }
@@ -85,25 +85,26 @@ import { LangChainToolWrapper } from "../lib/agent/plugins/langchain/tools";
 
 const wikipediaTool = new WikipediaQueryRun({
   topKResults: 3,
-  maxDocumentLength: 4000
+  maxDocumentLength: 4000,
 });
 
 new LangChainToolWrapper(wikipediaTool).registerAsTool();
 ```
+
 </Steps>
 
 ## Available Tools
 
 ### Explore plugins
 
-You can explore the implemented LangChain tools and their available actions directly in the source code under [`src/lib/agent/plugins`](https://github.com/KasarLabs/starknet-agent-kit/tree/main/src/lib/agent/plugins) or through our high-level plugin interface.
+You can explore the implemented LangChain tools and their available actions directly in the source code under [`src/lib/agent/plugins`](https://github.com/KasarLabs/snak/tree/main/src/lib/agent/plugins) or through our high-level plugin interface.
 
-<img 
-  src="/plugins.gif" 
+<img
+  src="/plugins.gif"
   width={500}
   style={{
-    borderRadius: '10px',
-    objectFit: 'cover'
+    borderRadius: "10px",
+    objectFit: "cover",
   }}
   alt="Plugins"
 />

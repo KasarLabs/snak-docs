@@ -51,7 +51,7 @@ import {
 
 ## What's an Action?
 
-An Action in the Starknet Agent Kit is a task that an agent can perform.
+An Action in the Snak is a task that an agent can perform.
 Actions are implemented as tools with defined schemas and execution logic.
 Each action represents a specific capability, like transferring tokens or
 checking balances. These tools are static and implemented by developers to
@@ -97,12 +97,13 @@ lib/agent/plugins/
     ├── utils/        # Utility functions
     ├── constant/     # Constants and addresses
     ├── interface/    # Interfaces and schemas
-    └── types/        # Type definitions 
-    └── readme.md     
+    └── types/        # Type definitions
+    └── readme.md
 ```
+
 ## Interacting with Actions
 
-import { Tabs, Tab } from 'nextra/components'
+import { Tabs, Tab } from "nextra/components";
 
 There are currently four ways to run actions through your agents:
 
@@ -144,6 +145,7 @@ There are currently four ways to run actions through your agents:
     const transferResult = await transfer(recipient, amount);
     ```
     </Steps>
+
   </Tab>
 
   <Tab>
@@ -163,6 +165,7 @@ There are currently four ways to run actions through your agents:
     ### Access Chat Interface
     Select the chat option in the menu to start interacting with your agent.
     </Steps>
+
   </Tab>
 
   <Tab>
@@ -185,6 +188,7 @@ There are currently four ways to run actions through your agents:
     ### Access Interface
     Open your browser and navigate to `http://localhost:3000` to interact with your agent.
     </Steps>
+
   </Tab>
 
   <Tab>
@@ -212,6 +216,7 @@ There are currently four ways to run actions through your agents:
     ### Monitor Responses
     Check the response JSON for your agent's replies and action results.
     </Steps>
+
   </Tab>
 </Tabs>
 
@@ -219,14 +224,14 @@ There are currently four ways to run actions through your agents:
 
 ### Explore plugins
 
-You can explore the implemented plugins and their available actions directly in the source code under [`src/lib/agent/plugins`](https://github.com/KasarLabs/starknet-agent-kit/tree/main/src/lib/agent/plugins) or through our high-level plugin interface.
+You can explore the implemented plugins and their available actions directly in the source code under [`src/lib/agent/plugins`](https://github.com/KasarLabs/snak/tree/main/src/lib/agent/plugins) or through our high-level plugin interface.
 
-<img 
-  src="/plugins.gif" 
+<img
+  src="/plugins.gif"
   width={500}
   style={{
-    borderRadius: '10px',
-    objectFit: 'cover'
+    borderRadius: "10px",
+    objectFit: "cover",
   }}
   alt="Plugins"
 />

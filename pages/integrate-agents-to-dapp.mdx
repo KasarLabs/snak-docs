@@ -1,22 +1,22 @@
 ---
 title: "Integrate Into Your DApp"
-description: "Learn how to integrate Starknet Agent Kit into your decentralized application"
+description: "Learn how to integrate Snak into your decentralized application"
 ---
 
-import { Steps } from 'nextra/components'
-import { Callout } from 'nextra/components'
-import { Cards, Card } from 'nextra/components'
+import { Steps } from "nextra/components";
+import { Callout } from "nextra/components";
+import { Cards, Card } from "nextra/components";
 
 # Integrate Into Your DApp
 
-Starknet Agent Kit can be integrated into your existing dApp or process as an NPM package, enabling AI-powered interactions with the Starknet blockchain through natural language.
+Snak can be integrated into your existing dApp or process as an NPM package, enabling AI-powered interactions with the Starknet blockchain through natural language.
 
 ## Current Features
 
 <Steps>
 ### Install Package
 
-Add the Starknet Agent Kit to your project:
+Add the Snak to your project:
 
 ```bash
 npm install starknet-agent-kit
@@ -38,7 +38,7 @@ const agent = new StarknetAgent({
   aiProviderApiKey: "your-ai-provider-key",
   aiProvider: "anthropic", // or 'openai', 'gemini', 'ollama'
   aiModel: "claude-3-5-sonnet-latest",
-  
+
   // Starknet Configuration
   accountPrivateKey: "your-wallet-private-key",
   rpcUrl: "your-rpc-url",
@@ -59,6 +59,7 @@ await agent.execute("transfer 0.1 ETH to 0x123...");
 // Execute swaps
 await agent.execute("Swap 5 USDC for ETH");
 ```
+
 </Steps>
 
 ## Configuration Reference
@@ -68,15 +69,15 @@ The `StarknetAgent` constructor currently accepts the following configuration op
 ```typescript
 interface StarknetAgentConfig {
   // Required Parameters
-  aiProviderApiKey: string;    // Your AI provider API key
-  aiProvider: "anthropic" | "openai" | "gemini" | "ollama";  // AI model provider
-  aiModel: string;             // Model identifier (e.g., "claude-3-5-sonnet-latest")
-  accountPrivateKey: string;   // Your Starknet wallet private key
-  rpcUrl: string;             // Starknet RPC endpoint
+  aiProviderApiKey: string; // Your AI provider API key
+  aiProvider: "anthropic" | "openai" | "gemini" | "ollama"; // AI model provider
+  aiModel: string; // Model identifier (e.g., "claude-3-5-sonnet-latest")
+  accountPrivateKey: string; // Your Starknet wallet private key
+  rpcUrl: string; // Starknet RPC endpoint
 }
 ```
 
 <Callout type="info">
-  Make sure to never expose your private keys or API keys in your code. Use environment variables or secure key management solutions.
+  Make sure to never expose your private keys or API keys in your code. Use
+  environment variables or secure key management solutions.
 </Callout>
-
